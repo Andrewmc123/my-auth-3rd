@@ -11,6 +11,8 @@ const setTokenCookie = (res, user) => {
     id: user.id,
     email: user.email,
     username: user.username,
+    firstName: user.firstName,
+    lastName: user.lastName,
   };
   const token = jwt.sign(
     { data: safeUser },
@@ -41,10 +43,10 @@ const restoreUser = (req, res, next) => {
     }
 
     try {
-      const { id } = jwtPayload.data;
+      const { id, firstName, lastName } = jwtPayload.data;
       req.user = await User.findByPk(id, {
         attributes: {
-          include: ['email', 'createdAt', 'updatedAt']
+          include: ['email', 'createdAt', 'updatedAt', 'firstName', 'lastName']
         }
       });
     } catch (e) {
