@@ -14,7 +14,6 @@ router.use(restoreUser);
 // Mount routers
 router.use('/session', sessionRouter);
 router.use('/users', usersRouter);
-
-module.exports = router;
+router.use('/spots', require('./spots'));
 
 module.exports = router;
