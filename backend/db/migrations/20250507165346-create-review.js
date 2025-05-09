@@ -1,54 +1,59 @@
-"use strict";
+'use strict';
 
+let options = {
+ };
+ if (process.env.NODE_ENV === 'production') {
+   options.schema = process.env.SCHEMA;  
+ }
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("Reviews", {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable('Reviews', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: "Users",
-          key: "id"
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE"
-      },
       spotId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "Spots",
-          key: "id"
+          model: 'Spots',
+          key: 'id'
         },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE"
+        onDelete: 'CASCADE'
       },
-      rating: {
+      userId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
       },
-      comment: {
+      review: {
         type: Sequelize.TEXT,
-        allowNull: true
+        allowNull: false,
+      },
+      stars: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
-    });
+    }, options);
   },
-
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Reviews");
+  async down(queryInterface, Sequelize) {
+    options.tableName = "Reviews";
+    await queryInterface.dropTable(options);
   }
 };

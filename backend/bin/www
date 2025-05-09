@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // backend/bin/www
 
-// Import environment variables
+
 require('dotenv').config();                     // Load variables from .env file
 
 const { port } = require('../config');

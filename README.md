@@ -5,7 +5,7 @@
 ![db-schema](./images/db-schema.png)
 
 ## API Documentation
-
+ ow 
 ### All endpoints that require authentication
 
 All endpoints that require a current user to be logged in.

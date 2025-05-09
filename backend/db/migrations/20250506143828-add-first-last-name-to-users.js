@@ -1,8 +1,5 @@
 'use strict';
 
-/** @type {import('sequelize-cli').Migration} */
-'use strict';
-
 let options = {};
 options.tableName = 'Users';
 if (process.env.NODE_ENV === 'production') {
