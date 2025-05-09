@@ -1,9 +1,10 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-
+// backend/routes/api/users.js
+// ...
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-
+// ...
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
@@ -12,7 +13,7 @@ const router = express.Router();
 
 
 
-
+// backend/routes/api/users.js
 const validateSignup = [
     check('email')
       .exists({ checkFalsy: true })
@@ -40,6 +41,7 @@ const validateSignup = [
   ];
 
 
+// signing up
 router.post(
     '/',
     validateSignup,

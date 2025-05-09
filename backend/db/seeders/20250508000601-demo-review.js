@@ -4,16 +4,17 @@ const bcrypt = require("bcryptjs");
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;  
+  options.schema = process.env.SCHEMA;  // define your schema in options object
 }
 
+/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
     await Review.bulkCreate([
       {
         spotId: 1,
         userId: 2,
-        review: "Wonderful Alaskan get away in the woods, with monutain views.",
+        review: "Wonderful Alaskan get away in the woods, with moutain views.",
         stars: 5,
       },
       {
@@ -25,7 +26,7 @@ module.exports = {
       {
         spotId: 3,
         userId: 1,
-        review: "Perfect splot to attend a show at the closest venue!",
+        review: "Perfect spot to attend a show at the closest venue!",
         stars: 5,
       },
       {
