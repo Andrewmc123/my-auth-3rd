@@ -34,7 +34,44 @@ module.exports = (sequelize, DataTypes) => {
         hooks: true
       })
     }
+  }, {
+    sequelize,
+    modelName: 'Spot'
+  });
+  return Spot;
+}
+module.exports = (sequelize, DataTypes) => {
+  class Spot extends Model {
+    static associate(models) {
+      Spot.belongsTo(models.User, {
+        foreignKey: 'ownerId',
+        as: 'Owner'
+      })
+
+      Spot.hasMany(models.SpotImage, {
+        foreignKey: 'spotId',
+        onDelete: 'CASCADE',
+        hooks: true
+      })
+
+      Spot.hasMany(models.Review, {
+        foreignKey: 'spotId',
+        onDelete: 'CASCADE',
+        hooks: true
+      })
+      
+      Spot.hasMany(models.Booking, {
+        foreignKey: "spotId",
+        onDelete: "CASCADE",
+        hooks: true
+      })
+    }
+
+    static init(attributes, options) {
+      return super.init(attributes, options);
+    }
   }
+  
   Spot.init({
     ownerId: {
       type: DataTypes.INTEGER,
