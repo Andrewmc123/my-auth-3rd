@@ -1,13 +1,28 @@
 'use strict';
 
+const { log } = console;
+
 let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA || 'my_auth';
+  log('Production Schema:', options.schema);
 }
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Spots', options.schema ? { tableName: 'Spots', schema: options.schema } : 'Spots', {
+    log('Creating Spots table with options:', JSON.stringify(options));
+    const schemaName = options.schema || 'public';
+    log('Using Schema:', schemaName);
+    
+    // Ensure schema exists
+    try {
+      await queryInterface.createSchema(schemaName);
+    } catch (error) {
+      log('Schema might already exist:', error.message);
+    }
+
+    await queryInterface.createTable('Spots', {
+      schema: schemaName,
       id: {
         allowNull: false,
         autoIncrement: true,
