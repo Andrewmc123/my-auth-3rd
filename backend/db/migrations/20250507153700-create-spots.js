@@ -2,12 +2,12 @@
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA || 'my_auth';  // define your schema in options object
+  options.schema = process.env.SCHEMA || 'my_auth';
 }
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Spots', {
+    await queryInterface.createTable('Spots', options.schema ? { tableName: 'Spots', schema: options.schema } : 'Spots', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Users',
+          model: options.schema ? { tableName: 'Users', schema: options.schema } : 'Users',
           key: 'id'
         },
         onDelete: 'CASCADE'
