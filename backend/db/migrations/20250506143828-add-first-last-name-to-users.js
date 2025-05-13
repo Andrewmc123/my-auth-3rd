@@ -3,7 +3,7 @@
 let options = {};
 options.tableName = 'Users';
 if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;
+  options.schema = process.env.SCHEMA || 'my_auth';
 }
 
 module.exports = {
