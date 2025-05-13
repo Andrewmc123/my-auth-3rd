@@ -1,28 +1,31 @@
 'use strict';
 
-const { log } = console;
-
-let options = {};
-if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA || 'my_auth';
-  log('Production Schema:', options.schema);
-}
-
 module.exports = {
   async up(queryInterface, Sequelize) {
-    log('Creating Spots table with options:', JSON.stringify(options));
-    const schemaName = options.schema || 'public';
-    log('Using Schema:', schemaName);
-    
-    // Ensure schema exists
+    const schema = process.env.SCHEMA || 'my_auth';
+    console.log(`Attempting to create Spots table in schema: ${schema}`);
+
+    // Explicitly drop the table if it exists to prevent conflicts
     try {
-      await queryInterface.createSchema(schemaName);
-    } catch (error) {
-      log('Schema might already exist:', error.message);
+      await queryInterface.dropTable({ tableName: 'Spots', schema });
+      console.log('Existing Spots table dropped');
+    } catch (dropError) {
+      console.log('No existing Spots table to drop:', dropError.message);
     }
 
-    await queryInterface.createTable('Spots', {
-      schema: schemaName,
+    // Attempt to create the schema
+    try {
+      await queryInterface.createSchema(schema);
+      console.log(`Schema ${schema} created or already exists`);
+    } catch (schemaError) {
+      console.log('Schema creation error:', schemaError.message);
+    }
+
+    // Create Spots table with full configuration
+    await queryInterface.createTable({
+      tableName: 'Spots',
+      schema: schema
+    }, {
       id: {
         allowNull: false,
         autoIncrement: true,
