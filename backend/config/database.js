@@ -9,8 +9,14 @@ module.exports = {
     typeValidation: true
   },
   production: {
-    storage: config.dbFile,
-    dialect: 'sqlite',
+    use_env_variable: 'DATABASE_URL',
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    },
     seederStorage: 'sequelize',
     logQueryParameters: true,
     typeValidation: true

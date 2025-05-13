@@ -1,12 +1,9 @@
 'use strict';
 
-let options = {
-  // schema: 'retreat',
-   //tableName: 'Users'
- };
- if (process.env.NODE_ENV === 'production') {
-   options.schema = process.env.SCHEMA;  // define your schema in options object
- }
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA || 'my_auth';  // define your schema in options object
+}
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -66,12 +63,12 @@ module.exports = {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: Sequelize.fn('now')
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: Sequelize.fn('now')
       }
     }, options);
   },

@@ -33,24 +33,24 @@ module.exports = {
         unique: true
       },
       hashedPassword: {
-        type: Sequelize.STRING.BINARY,
+        type: Sequelize.STRING,
         allowNull: false
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: Sequelize.fn('now')
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: Sequelize.fn('now')
       }
     }, options);
   },
 
   async down(queryInterface, Sequelize) {
-    options.tableName = "Users";
+    options.tableName = 'Users';
     return queryInterface.dropTable(options);
   }
 };

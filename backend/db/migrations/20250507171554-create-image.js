@@ -1,10 +1,9 @@
 'use strict';
-let options = {
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA || 'my_auth';
+}
 
- };
- if (process.env.NODE_ENV === 'production') {
-   options.schema = process.env.SCHEMA; 
- }
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('SpotImages', {
@@ -33,11 +32,13 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now')
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now')
       }
     }, options);
   },

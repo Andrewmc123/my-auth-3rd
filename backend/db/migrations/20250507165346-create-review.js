@@ -1,11 +1,10 @@
 'use strict';
 
-let options = {
-  
- };
- if (process.env.NODE_ENV === 'production') {
-   options.schema = process.env.SCHEMA;  
- }
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA || 'my_auth';
+}
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Reviews', {
@@ -44,12 +43,12 @@ module.exports = {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: Sequelize.fn('now')
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: Sequelize.fn('now')
       }
     }, options);
   },
