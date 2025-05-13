@@ -88,7 +88,10 @@ module.exports = {
     }
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = "Spots";
-    await queryInterface.dropTable(options);
+    const schema = process.env.SCHEMA || 'my_auth';
+    await queryInterface.dropTable({ 
+      tableName: 'Spots', 
+      schema: schema 
+    });
   }
 };
