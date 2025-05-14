@@ -40,3 +40,8 @@ button {
 button:hover {
   color: #666;
 }
+
+
+.show-menu{
+  position: absolute;
+}

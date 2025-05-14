@@ -1,9 +1,8 @@
 'use strict';
 
-let options = {};
-if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA || 'my_auth';
-}
+const options = process.env.NODE_ENV === 'production' ? {
+  schema: process.env.SCHEMA || 'my_auth'
+} : {};
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -43,17 +42,17 @@ module.exports = {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('now')
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('now')
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = "Reviews";
-    await queryInterface.dropTable(options);
+    options.tableName = 'Reviews';
+    return queryInterface.dropTable(options);
   }
 };

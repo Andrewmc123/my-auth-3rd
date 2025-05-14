@@ -1,18 +1,13 @@
 'use strict';
 
-// Enhanced logging function
+const options = process.env.NODE_ENV === 'production' ? {
+  schema: process.env.SCHEMA || 'my_auth'
+} : {};
+
 module.exports = {
   async up(queryInterface, Sequelize) {
-    const schema = process.env.SCHEMA || 'my_auth';
-    console.log(`Creating Spots table in schema: ${schema}`);
-
     try {
-      await queryInterface.createSchema(schema).catch(() => {});
-
-      await queryInterface.createTable({
-        tableName: 'Spots',
-        schema: schema
-      }, {
+      await queryInterface.createTable('Spots', {
         id: {
           type: Sequelize.INTEGER,
           allowNull: false,
@@ -23,7 +18,7 @@ module.exports = {
           type: Sequelize.INTEGER,
           allowNull: false,
           references: {
-            model: { tableName: 'Users', schema: schema },
+            model: 'Users',
             key: 'id'
           },
           onDelete: 'CASCADE'
@@ -68,14 +63,14 @@ module.exports = {
         createdAt: {
           allowNull: false,
           type: Sequelize.DATE,
-          defaultValue: Sequelize.fn('now')
+          defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
         },
         updatedAt: {
           allowNull: false,
           type: Sequelize.DATE,
-          defaultValue: Sequelize.fn('now')
+          defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
         }
-      });
+      }, options);
 
       console.log('Spots table created successfully');
     } catch (error) {
@@ -88,10 +83,7 @@ module.exports = {
     }
   },
   async down(queryInterface, Sequelize) {
-    const schema = process.env.SCHEMA || 'my_auth';
-    await queryInterface.dropTable({ 
-      tableName: 'Spots', 
-      schema: schema 
-    });
+    options.tableName = 'Spots';
+    return queryInterface.dropTable(options);
   }
 };

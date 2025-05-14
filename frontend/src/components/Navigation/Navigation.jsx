@@ -1,22 +1,36 @@
+
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
+import '/src/index.css'
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
 
   return (
-    <ul>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
-      {isLoaded && (
-        <li>
-          <ProfileButton user={sessionUser} />
-        </li>
+
+<nav className='nav-bar'>
+
+
+  <div className='nav-logo'>
+        <NavLink to="/" >
+          <img src="/logo.png" className="logo" />
+        </NavLink>
+  </div>
+  <div className='nav-buttons'>
+
+      {sessionUser &&(
+
+        <NavLink to="/spots/new"><button className='spot-button'>Create a New Spot</button></NavLink>
+
       )}
-    </ul>
+
+      {isLoaded && (
+        <ProfileButton  user={sessionUser} />
+      )}
+  </div>
+</nav>
   );
 }
 
