@@ -1,12 +1,19 @@
 'use strict';
 
 const options = process.env.NODE_ENV === 'production' ? {
-  schema: process.env.SCHEMA || 'my_auth'
+  schema: 'public' // Always use 'public' schema
 } : {};
 
 module.exports = {
   async up(queryInterface, Sequelize) {
     try {
+      console.log('Current Environment:', process.env.NODE_ENV);
+      console.log('Current Schema:', options.schema);
+      console.log('Database URL:', process.env.DATABASE_URL);
+
+      // Drop the table if it exists to ensure clean migration
+      await queryInterface.dropTable('Spots', { cascade: true }).catch(() => {});
+
       await queryInterface.createTable('Spots', {
         id: {
           type: Sequelize.INTEGER,
@@ -18,7 +25,7 @@ module.exports = {
           type: Sequelize.INTEGER,
           allowNull: false,
           references: {
-            model: 'Users',
+            model: 'Users', // Use default 'public' schema
             key: 'id'
           },
           onDelete: 'CASCADE'
@@ -77,7 +84,10 @@ module.exports = {
       console.error('CRITICAL ERROR in Spots table migration', {
         message: error.message,
         stack: error.stack,
-        name: error.name
+        name: error.name,
+        environment: process.env.NODE_ENV,
+        schema: options.schema,
+        databaseUrl: process.env.DATABASE_URL
       });
       throw error;
     }

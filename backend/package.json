@@ -6,10 +6,11 @@
   "scripts": {
     "sequelize": "sequelize",
     "sequelize-cli": "sequelize-cli",
-    "start": "per-env",
-    "start:development": "nodemon ./bin/www",
-    "start:production": "node ./bin/www",
-    "build": "node psql-setup-script.js"
+    "start": "node ./bin/www",
+    "db:migrate": "NODE_ENV=production sequelize-cli db:migrate",
+    "db:migrate:undo": "NODE_ENV=production sequelize-cli db:migrate:undo",
+    "db:seed": "NODE_ENV=production sequelize-cli db:seed:all",
+    "db:reset": "sequelize-cli db:drop && sequelize-cli db:create && sequelize-cli db:migrate && sequelize-cli db:seed:all"
   },
   "keywords": [],
   "author": "",
