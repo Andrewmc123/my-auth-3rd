@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "install": "npm --prefix backend install backend && cd frontend && npm install && npm install vite && cd ..",
+    "install": "npm --prefix backend install backend",
     "dev:backend": "npm install --prefix backend start",
     "sequelize": "npm run --prefix backend sequelize",
     "sequelize-cli": "npm run --prefix backend sequelize-cli",
-    "start": "npm start --prefix backend",
-    "build": "cd frontend && npm install && npm install vite && npm run build && cd ../backend && npm install"
+    "start": "npm start --prefix backend"
   },
   "dependencies": {
     "pg": "^8.16.0",
