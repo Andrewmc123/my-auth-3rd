@@ -1,0 +1,103 @@
+.spots-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.spots-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.spots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.spot-card {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.spot-card:hover {
+  transform: translateY(-5px);
+}
+
+.spot-preview-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.spot-card-info {
+  padding: 15px;
+}
+
+.spot-card-info h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.spot-card-info p {
+  margin: 5px 0 0;
+  color: #666;
+}
+
+.spot-card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.spot-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.spot-form label {
+  font-weight: bold;
+}
+
+.spot-form input,
+.spot-form textarea {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.spot-form textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.spot-submit-btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.spot-submit-btn:hover {
+  background-color: #0056b3;
+}
+
+.error {
+  color: #dc3545;
+  font-size: 0.8rem;
+}
