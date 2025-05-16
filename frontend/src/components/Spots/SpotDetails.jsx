@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import Reviews from './Reviews';
 import './Spots.css';
 
 function SpotDetails() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const spot = useSelector(state => state.spots.singleSpot);
+  const reviews = useSelector(state => state.reviews.spotReviews[spotId]);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -43,6 +45,10 @@ function SpotDetails() {
         <div className="spot-host">
           <h2>Hosted by {spot.Owner?.firstName}</h2>
         </div>
+      </div>
+
+      <div className="spot-reviews">
+        <Reviews spotId={spotId} />
       </div>
     </div>
   );
