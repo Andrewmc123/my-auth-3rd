@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useModal } from '../../context/Modal';
+import { fetchSpots } from '../../store/spots';
 import OpenModalButton from '../OpenModalButton';
 import CreateSpotModal from './CreateSpotModal';
 import SpotCard from './SpotCard';

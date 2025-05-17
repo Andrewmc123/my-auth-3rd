@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useModal } from '../../context/Modal';
 import OpenModalButton from '../OpenModalButton';
 import CreateReviewModal from './CreateReviewModal';
 import './Spots.css';

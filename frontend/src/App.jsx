@@ -5,7 +5,6 @@ import Navigation from './components/Navigation/Navigation';
 import SpotsIndex from './components/Spots/SpotsIndex';
 import SpotDetails from './components/Spots/SpotDetails';
 import * as sessionActions from './store/session';
-import './App.css';
 
 function Layout() {
   const dispatch = useDispatch();

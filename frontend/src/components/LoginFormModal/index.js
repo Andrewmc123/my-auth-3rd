@@ -1,2 +1,3 @@
-export { default as LoginFormModal } from './LoginFormModal';
-export { default as LoginForm } from './LoginForm';
+import LoginFormModal from "./LoginFormModal"
+
+export default LoginFormModal

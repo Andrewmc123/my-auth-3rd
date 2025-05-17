@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
+import { createSpot } from '../../store/spots';
 import './Spots.css';
 
 function CreateSpotModal() {

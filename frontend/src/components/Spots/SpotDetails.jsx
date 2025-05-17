@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchSpot } from '../../store/spots';
 import Reviews from './Reviews';
 import './Spots.css';
 
@@ -8,7 +9,6 @@ function SpotDetails() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const spot = useSelector(state => state.spots.singleSpot);
-  const reviews = useSelector(state => state.reviews.spotReviews[spotId]);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
