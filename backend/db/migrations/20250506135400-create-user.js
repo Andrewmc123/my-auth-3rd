@@ -1,9 +1,11 @@
 'use strict';
 
-const options = process.env.NODE_ENV === 'production' ? {
-  schema: process.env.SCHEMA || 'my_auth'
-} : {};
-
+let options = {
+  // Configuration options for the Users table
+};
+if (process.env.NODE_ENV === 'production') {
+   options.schema = process.env.SCHEMA;  
+ }
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Users', {

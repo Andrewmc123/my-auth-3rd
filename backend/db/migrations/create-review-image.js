@@ -1,9 +1,10 @@
 'use strict';
-
-const options = process.env.NODE_ENV === 'production' ? {
-  schema: process.env.SCHEMA || 'my_auth'
-} : {};
-
+const options = {
+  // Configuration options for the ReviewImages table
+};
+ if (process.env.NODE_ENV === 'production') {
+   options.schema = process.env.SCHEMA;  
+}
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('ReviewImages', {

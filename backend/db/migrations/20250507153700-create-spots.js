@@ -1,8 +1,11 @@
 'use strict';
 
-const options = process.env.NODE_ENV === 'production' ? {
-  schema: 'public' // Always use 'public' schema
-} : {};
+let options = { 
+  // Configuration options for the Spots table
+ };
+ if (process.env.NODE_ENV === 'production') {
+   options.schema = process.env.SCHEMA;  
+ }
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -11,7 +14,7 @@ module.exports = {
       console.log('Current Schema:', options.schema);
       console.log('Database URL:', process.env.DATABASE_URL);
 
-      // Drop the table if it exists to ensure clean migration
+      
       await queryInterface.dropTable('Spots', { cascade: true }).catch(() => {});
 
       await queryInterface.createTable('Spots', {
@@ -25,7 +28,7 @@ module.exports = {
           type: Sequelize.INTEGER,
           allowNull: false,
           references: {
-            model: 'Users', // Use default 'public' schema
+            model: 'Users', 
             key: 'id'
           },
           onDelete: 'CASCADE'
