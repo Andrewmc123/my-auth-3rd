@@ -1,6 +1,5 @@
 'use strict';
 const options = {
-  // Configuration options for the ReviewImages table
 };
  if (process.env.NODE_ENV === 'production') {
    options.schema = process.env.SCHEMA;  

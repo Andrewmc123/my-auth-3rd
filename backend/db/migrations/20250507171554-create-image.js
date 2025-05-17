@@ -1,10 +1,9 @@
 'use strict';
 
 let options = { 
-  // Configuration options for the Images table
-};
-if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA; 
+ };
+ if (process.env.NODE_ENV === 'production') {
+   options.schema = process.env.SCHEMA; 
 }
 
 module.exports = {

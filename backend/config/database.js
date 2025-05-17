@@ -1,7 +1,7 @@
 module.exports = {
   development: {
     dialect: 'sqlite',
-    storage: '../database.sqlite'
+    storage: './database.sqlite'
   },
   production: {
     use_env_variable: 'DATABASE_URL',
