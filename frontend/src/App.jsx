@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Navigation from './components/Navigation/Navigation';
-import SpotsIndex from './components/Spots/SpotsIndex';
+import Spots from './components/Spots/Spots';
 import SpotDetails from './components/Spots/SpotDetails';
 import ManageSpots from './components/Spots/ManageSpots';
 import LoginFormPage from './components/LoginFormPage';
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <h1>Welcome!</h1>
+        element: <Spots />
       },
       {
         path: '/spots/:spotId',
