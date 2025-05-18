@@ -53,6 +53,129 @@
   color: inherit;
 }
 
+/* Manage Spots Styles */
+.manage-spots {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.manage-spots h1 {
+  margin-bottom: 20px;
+}
+
+.no-spots {
+  text-align: center;
+  padding: 20px;
+}
+
+.spot-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* Modal Styles */
+.delete-modal {
+  padding: 20px;
+}
+
+.delete-modal h1 {
+  margin-bottom: 15px;
+}
+
+.delete-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.delete-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+}
+
+.cancel-button {
+  background-color: #95a5a6;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.cancel-button:hover {
+  background-color: #7f8c8d;
+}
+
+/* Review Styles */
+.review-list {
+  margin-top: 20px;
+}
+
+.review-item {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.review-rating {
+  display: flex;
+  gap: 2px;
+}
+
+.star {
+  color: #f1c40f;
+}
+
+.star.filled {
+  color: #f39c12;
+}
+
+.review-text {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.review-date {
+  color: #666;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+.delete-review-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-left: auto;
+}
+
+.delete-review-button:hover {
+  background-color: #c0392b;
+}
+
 .spot-form {
   display: flex;
   flex-direction: column;

@@ -9,10 +9,5 @@
     "sequelize-cli": "npm run --prefix backend sequelize-cli",
     "start": "npm start --prefix backend",
     "build": "npm run --prefix backend build"
-  },
-  "dependencies": {
-    "pg": "^8.16.0",
-    "sequelize": "^6.37.7",
-    "sequelize-cli": "^6.6.3"
+    }
   }
-}

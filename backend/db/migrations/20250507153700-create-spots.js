@@ -1,7 +1,7 @@
 'use strict';
 
 let options = { 
-  // Configuration options for the Spots table
+  //  options for the Spots table
  };
  if (process.env.NODE_ENV === 'production') {
    options.schema = process.env.SCHEMA;  
@@ -28,7 +28,7 @@ module.exports = {
           type: Sequelize.INTEGER,
           allowNull: false,
           references: {
-            model: 'Users', 
+            model: 'User', 
             key: 'id'
           },
           onDelete: 'CASCADE'
