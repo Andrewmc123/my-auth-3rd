@@ -1,10 +1,9 @@
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { deleteReview } from '../../store/reviews';
 import './Spots.css';
 
-function DeleteReviewModal({ reviewId, spotId, onDelete }) {
+function DeleteReviewModal({ reviewId, onDelete }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 

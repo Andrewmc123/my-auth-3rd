@@ -153,7 +153,7 @@ export const setError = (error) => ({
 
 export const spotsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'spots/setAllSpots':
+    case 'spots/setAllSpots':{
       const spots = action.payload.Spots;
       const spotsById = spots.reduce((acc, spot) => {
         acc[spot.id] = spot;
@@ -165,8 +165,9 @@ export const spotsReducer = (state = initialState, action) => {
         spotsById,
         loading: false,
         error: null
-      };
-    case 'spots/setSpot':
+      }
+    }
+    case 'spots/setSpot': 
       return {
         ...state,
         singleSpot: action.payload.Spot,

@@ -12,8 +12,8 @@ function UpdateSpotModal({ spot }) {
   const [city, setCity] = useState(spot.city);
   const [state, setState] = useState(spot.state);
   const [country, setCountry] = useState(spot.country);
-  const [lat, setLat] = useState(spot.lat.toString());
-  const [lng, setLng] = useState(spot.lng.toString());
+  const [lat] = useState(spot.lat.toString());
+  const [lng] = useState(spot.lng.toString());
   const [name, setName] = useState(spot.name);
   const [description, setDescription] = useState(spot.description);
   const [price, setPrice] = useState(spot.price.toString());
@@ -54,8 +54,8 @@ function UpdateSpotModal({ spot }) {
       <h1>Update Your Spot</h1>
       <form onSubmit={handleSubmit} className="spot-form">
         <div className="form-group">
-          <label>Where's your place located?</label>
-          <p>Guests will only get your exact address once they booked a reservation.</p>
+          <label>Where&#39;s your place located?</label>
+          <p>Guests will only get your exact address once they&#39;ve booked a reservation.</p>
           <input
             type="text"
             placeholder="Country"
@@ -100,7 +100,7 @@ function UpdateSpotModal({ spot }) {
 
         <div className="form-group">
           <label>Create a title for your spot</label>
-          <p>Catch guests' attention with a spot title that highlights what makes your place special.</p>
+          <p>Catch guests&apos; attention with a spot title that highlights what makes your place special.</p>
           <input
             type="text"
             placeholder="Name of your spot"

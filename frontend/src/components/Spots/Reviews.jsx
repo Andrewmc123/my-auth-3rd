@@ -1,15 +1,11 @@
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import OpenModalButton from '../OpenModalButton';
-import CreateReviewModal from './CreateReviewModal';
-import DeleteReviewModal from './DeleteReviewModal';
 import './Spots.css';
 
 function Reviews({ spotId }) {
   const reviews = useSelector(state => state.reviews.spotReviews[spotId] || []);
   const currentUser = useSelector(state => state.session.user);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [selectedReview, setSelectedReview] = useState(null);
+
 
   const calculateAverageRating = () => {
     if (!reviews.length) return 0;
@@ -17,15 +13,11 @@ function Reviews({ spotId }) {
     return (total / reviews.length).toFixed(1);
   };
 
-  const handleDeleteReview = (review) => {
-    setSelectedReview(review);
-    setShowDeleteModal(true);
+  const handleDeleteReview = () => {
+    // TODO: Implement review deletion logic
   };
 
-  const handleReviewDeleted = () => {
-    setSelectedReview(null);
-    setShowDeleteModal(false);
-  };
+
 
   return (
     <div className="reviews-container">
@@ -72,13 +64,8 @@ function Reviews({ spotId }) {
         <div className="write-review">
           <OpenModalButton
             buttonText="Write a Review"
-            onButtonClick={openModal}
           />
         </div>
-      )}
-
-      {showModal && (
-        <CreateReviewModal onClose={closeModal} />
       )}
     </div>
   );

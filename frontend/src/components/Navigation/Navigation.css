@@ -7,6 +7,16 @@ ul {
   margin: 0;
 }
 
+.nav-logo {
+  color: #61dafb;
+  margin-right: 20px;
+  transition: transform 0.3s ease;
+}
+
+.nav-logo:hover {
+  transform: scale(1.1);
+}
+
 li {
   margin-right: 15px;
 }

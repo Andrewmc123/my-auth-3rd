@@ -1,11 +1,8 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import './Spots.css';
 
 function DeleteSpotModal({ spotId, onDelete }) {
-  const dispatch = useDispatch();
-  const [showConfirmation, setShowConfirmation] = useState(false);
+  const { closeModal } = useModal();
 
   const handleDelete = async () => {
     await onDelete(spotId);
@@ -19,7 +16,7 @@ function DeleteSpotModal({ spotId, onDelete }) {
         <button className="delete-button" onClick={handleDelete}>
           Yes (Delete Spot)
         </button>
-        <button className="cancel-button" onClick={() => setShowConfirmation(false)}>
+        <button className="cancel-button" onClick={() => closeModal()}>
           No (Keep Spot)
         </button>
       </div>

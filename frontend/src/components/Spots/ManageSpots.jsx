@@ -36,7 +36,7 @@ function ManageSpots() {
       
       {userSpots.length === 0 ? (
         <div className="no-spots">
-          <p>You haven't created any spots yet.</p>
+          <p>You haven&apos;t created any spots yet.</p>
           <OpenModalButton
             buttonText="Create New Spot"
             modalComponent={<CreateSpotModal />}
