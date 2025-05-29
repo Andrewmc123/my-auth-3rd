@@ -1,6 +1,6 @@
 'use strict';
 
-const { Spot } = require('../models');
+const { Spot, User } = require('../models');
 const bcrypt = require("bcryptjs");
 
 let options = {};
@@ -11,6 +11,10 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
+
+    console.log(process.env.NODE_ENV)
+  
+  // create spots //
     await Spot.bulkCreate([
       {
         ownerId: 1,

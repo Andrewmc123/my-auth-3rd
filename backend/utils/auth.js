@@ -35,32 +35,43 @@ const setTokenCookie = (res, user) => {
 
 
 const restoreUser = (req, res, next) => {
-    // token parsed from cookies
-    const { token } = req.cookies;
-    req.user = null;
-  
-    return jwt.verify(token, secret, null, async (err, jwtPayload) => {
-      if (err) {
-        return next();
-      }
-  
-      try {
-        const { id } = jwtPayload.data;
-        req.user = await User.findByPk(id, {
-          attributes: {
-            include: ['email', 'createdAt', 'updatedAt']
-          }
+    try {
+        // token parsed from cookies
+        const { token } = req.cookies;
+        req.user = null;
+
+        if (!token) {
+            return next();
+        }
+
+        jwt.verify(token, secret, null, async (err, jwtPayload) => {
+            if (err) {
+                console.error('JWT verification failed:', err);
+                return next();
+            }
+
+            try {
+                const { id } = jwtPayload.data;
+                const user = await User.findByPk(id, {
+                    attributes: {
+                        include: ['email', 'createdAt', 'updatedAt']
+                    }
+                });
+
+                if (user) {
+                    req.user = user;
+                }
+                next();
+            } catch (error) {
+                console.error('Database error in restoreUser:', error);
+                next();
+            }
         });
-      } catch (e) {
-        res.clearCookie('token');
-        return next();
-      }
-  
-      if (!req.user) res.clearCookie('token');
-  
-      return next();
-    });
-  };
+    } catch (error) {
+        console.error('Error in restoreUser middleware:', error);
+        next();
+    }
+};
 
 
 

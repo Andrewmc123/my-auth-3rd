@@ -1,19 +1,11 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-// backend/routes/api/users.js
-// ...
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-// ...
-
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
 const router = express.Router();
-
-
-
-// backend/routes/api/users.js
 const validateSignup = [
     check('email')
       .exists({ checkFalsy: true })
@@ -48,8 +40,33 @@ router.post(
     async (req, res) => {
       const { firstName, lastName, email, password, username } = req.body;
       const hashedPassword = bcrypt.hashSync(password);
-      const user = await User.create({ firstName, lastName, email, username, hashedPassword });
-  
+      
+      const userExists = await User.findOne({
+        where: {
+          [Op.or]: [
+            { email },
+            { username }
+          ]
+        }
+      });
+
+      if (userExists) {
+        const err = new Error('User already exists');
+        err.status = 500;
+        err.title = 'User already exists';
+        err.errors = ['User with that email already exists'];
+        return next(err);
+      }
+
+      const user = await User.create({
+        firstName,
+        lastName,
+        email,
+        username,
+        hashedPassword
+      });
+
+      await setTokenCookie(res, user);
       const safeUser = {
         id: user.id,
         firstName: user.firstName,
@@ -57,11 +74,9 @@ router.post(
         email: user.email,
         username: user.username,
       };
-  
-      await setTokenCookie(res, safeUser);
-  
-      res.status(201)
-      return res.json({ 
+
+      await setTokenCookie(res, user);
+      return res.status(201).json({ 
         user: safeUser
       });
     }

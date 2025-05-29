@@ -15,8 +15,7 @@ module.exports = {
       console.log('Database URL:', process.env.DATABASE_URL);
 
       
-      await queryInterface.dropTable('Spots', { cascade: true }).catch(() => {});
-
+    
       await queryInterface.createTable('Spots', {
         id: {
           type: Sequelize.INTEGER,

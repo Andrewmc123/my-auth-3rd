@@ -1,16 +1,72 @@
-// backend/routes/api/session.js
 const express = require('express');
 const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
-// backend/routes/api/session.js
-// ...
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
 const router = express.Router();
+
+// Get current user
+router.get('/', restoreUser, (req, res) => {
+    const user = req.user;
+    if (user) {
+        return res.json({
+            user: {
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                username: user.username
+            }
+        });
+    } else {
+        return res.json({ user: null });
+    }
+});
+
+// Demo user credentials
+const DEMO_USER = {
+    email: 'demo@user.io',
+    username: 'Demo-lition',
+    password: 'password'
+};
+
+// Demo user login
+router.post('/demo', async (req, res, next) => {
+    const { email, username, password } = DEMO_USER;
+
+    const user = await User.unscoped().findOne({
+        where: {
+            [Op.or]: {
+                username,
+                email
+            }
+        }
+    });
+
+    if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
+        const err = new Error('Authentication failed');
+        err.status = 401;
+        err.title = 'Authentication failed';
+        err.errors = ['The provided credentials were invalid.'];
+        return next(err);
+    }
+
+    const safeUser = {
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        username: user.username
+    };
+
+    await setTokenCookie(res, user);
+    return res.json({
+        user: safeUser
+    });
+});
 
 const validateLogin = [
     check('credential')
@@ -21,87 +77,63 @@ const validateLogin = [
       .exists({ checkFalsy: true })
       .withMessage('Please provide a password.'),
     handleValidationErrors
-  ];
+];
 
 // Log in
-router.post(
-    '/',
-    validateLogin,
-    async (req, res, next) => {
-      const {firstName, lastName, credential, password } = req.body;
-  
-      const user = await User.unscoped().findOne({
+router.post('/', validateLogin, async (req, res, next) => {
+    const { credential, password } = req.body;
+
+    const user = await User.unscoped().findOne({
         where: {
-          [Op.or]: {
-            username: credential,
-            email: credential
-          }
+            [Op.or]: {
+                username: credential,
+                email: credential
+            }
         }
-      });
-  
-      if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
-        const err = new Error('Login failed');
+    });
+
+    if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
+        const err = new Error('Authentication failed');
         err.status = 401;
-        err.title = 'Login failed';
-        err.errors = { credential: 'The provided credentials were invalid.' };
+        err.title = 'Authentication failed';
+        err.errors = ['The provided credentials were invalid.'];
         return next(err);
-      }
-  
-      const safeUser = {
+    }
+
+    const safeUser = {
         id: user.id,
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        username: user.username,
-      };
-  
-      await setTokenCookie(res, safeUser);
-  
-      return res.json({
+        username: user.username
+    };
+
+    await setTokenCookie(res, user);
+    return res.json({
         user: safeUser
-      });
-    }
-  );
+    });
+});
 
-  
 // Log out
-router.delete(
-    '/',
-    (_req, res) => {
-      res.clearCookie('token');
-      return res.json({ message: 'success' });
-    }
-  );
-  
-  // ...
-
-
-
-
+router.delete('/', (_req, res) => {
+    res.clearCookie('token');
+    return res.json({ message: 'success' });
+});
 
 // Restore session user
-router.get(
-    '/',
-    (req, res) => {
-      const { user } = req;
-      if (user) {
+router.get('/', (req, res) => {
+    const { user } = req;
+    if (user) {
         const safeUser = {
-          id: user.id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-          username: user.username,
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            username: user.username
         };
-        return res.json({
-          user: safeUser
-        });
-      } else return res.json({ user: null });
+        return res.json({ user: safeUser });
     }
-  );
-  
-  // ...
-
-// backend/routes/api/session.js
-// ...
+    return res.json({ user: null });
+});
 
 module.exports = router;

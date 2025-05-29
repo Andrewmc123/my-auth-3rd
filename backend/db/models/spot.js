@@ -24,9 +24,11 @@ module.exports = (sequelize, DataTypes) => {
       })
     }
 
-    static init(attributes, options) {
+    /* 
+    static init(attributes, options) { 
       return super.init(attributes, options);
     }
+      */
   }
   
   Spot.init({
