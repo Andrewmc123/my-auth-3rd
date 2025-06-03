@@ -1,27 +1,47 @@
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
-import { ReactIcon } from 'react-icons/ri';
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import LoginFormModal from '../LoginFormModal/LoginFormModal';
+import SignupFormModal from '../SignupFormModal/SignupFormModal';
 import './Navigation.css';
 
-function Navigation() {
-  const sessionUser = useSelector(state => state.session.user);
+function Navigation({ isLoaded }) {
+  const sessionUser = useSelector((state) => state.session.user);
+
+  let sessionLinks;
+  if (sessionUser) {
+    sessionLinks = (
+      <li>
+        <ProfileButton user={sessionUser} />
+      </li>
+    );
+  } else {
+    sessionLinks = (
+      <>
+        <li>
+          <OpenModalButton
+            buttonText="Log In"
+            modalComponent={<LoginFormModal />}
+          />
+        </li>
+        <li>
+          <OpenModalButton
+            buttonText="Sign Up"
+            modalComponent={<SignupFormModal />}
+          />
+        </li>
+      </>
+    );
+  }
 
   return (
-    <nav className="header">
-      <div className="container">
-        <div className="nav-content">
-          <NavLink to="/" className="nav-link">
-            <ReactIcon className="nav-logo" size={32} />
-          </NavLink>
-          <div className="nav-links">
-            <NavLink to="/spots" className="nav-link">Vacation Rentals</NavLink>
-            <NavLink to="/spots/new" className="nav-link">List Your Property</NavLink>
-            <ProfileButton user={sessionUser} />
-          </div>
-        </div>
-      </div>
-    </nav>
+    <ul>
+      <li>
+        <NavLink to="/">Home</NavLink>
+      </li>
+      {isLoaded && sessionLinks}
+    </ul>
   );
 }
 

@@ -2,28 +2,23 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Navigation from './components/Navigation/Navigation';
-import LandingPage from './components/LandingPage/LandingPage';
-import SpotDetails from './components/Spots/SpotDetails';
-import ManageSpots from './components/Spots/ManageSpots';
-import CreateSpot from './components/Spots/CreateSpot';
-import EditSpot from './components/Spots/EditSpot';
-import SpotsIndex from './components/Spots/SpotsIndex';
-import LoginFormPage from './components/Authentication/LoginFormPage';
-import SignupFormPage from './components/Authentication/SignupFormPage';
-import NotFound from './components/NotFound';
 import * as sessionActions from './store/session';
-import './styles/global.css';
-import './styles/App.css';
+import { Modal } from './context/Modal';
+import LoginFormPage from './components/LoginFormPage/LoginFormPage'; 
+
 
 function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    dispatch(sessionActions.restoreUser()).then(() => {
-      setIsLoaded(true)
-    });
-  }, [dispatch]);
+  async function loadUser() {
+    await dispatch(sessionActions.restoreUser());
+    setIsLoaded(true);
+  }
+  loadUser();
+}, [dispatch]);
+
 
   return (
     <>
@@ -35,51 +30,21 @@ function Layout() {
 
 const router = createBrowserRouter([
   {
-    element: <Layout />,
-    children: [
-      {
-        path: '/',
-        element: <LandingPage />
-      },
-      {
-        path: '/spots',
-        element: <SpotsIndex />
-      },
-      {
-        path: '/spots/new',
-        element: <CreateSpot />
-      },
-      {
-        path: '/spots/:spotId',
-        element: <SpotDetails />
-      },
-      {
-        path: '/spots/:spotId/edit',
-        element: <EditSpot />
-      },
-      {
-        path: '/manage/spots',
-        element: <ManageSpots />
-      },
-      {
-        path: '/login',
-        element: <LoginFormPage />
-      },
-      {
-        path: '/signup',
-        element: <SignupFormPage />
-      },
-      {
-        path: '*',
-        element: <NotFound />
-      }
-    ]
+    path: '/',
+    element: <h1>Welcome!</h1>
+  },
+  {
+    path: '/login',
+    element: <LoginFormPage />
   }
 ]);
 
 function App() {
   return (
-    <RouterProvider router={router} />
+    <>
+      <RouterProvider router={router} />
+      <Modal />
+    </>
   );
 }
 
