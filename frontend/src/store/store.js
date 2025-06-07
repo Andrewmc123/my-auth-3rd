@@ -1,17 +1,16 @@
-// frontend/src/store/store.js
-
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import { thunk } from 'redux-thunk';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+  import {thunk} from 'redux-thunk';
 import sessionReducer from './session';
+import spotReducer from './spots';
 
 const rootReducer = combineReducers({
-  session: sessionReducer
+
+  session: sessionReducer,
+  spots: spotReducer,
 });
 
-
-
 let enhancer;
-if (import.meta.env.MODE === 'production') {
+if (import.meta.env.MODE === "production") {
   enhancer = applyMiddleware(thunk);
 } else {
   const logger = (await import("redux-logger")).default;
@@ -24,4 +23,4 @@ const configureStore = (preloadedState) => {
   return createStore(rootReducer, preloadedState, enhancer);
 };
 
-export default configureStore; 
+export default configureStore;
