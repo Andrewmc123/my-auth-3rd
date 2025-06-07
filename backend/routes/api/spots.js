@@ -78,7 +78,7 @@ router.get('/', async (req, res) => {
     offset: (page - 1) * size
   });
 
-  const spotsList = spots.map(spot => processSpot(spot.toJSON()));
+  const spotsList = spots.map(spot => spot.toJSON());
   return res.json({ Spots: spotsList, page, size });
 });
 
