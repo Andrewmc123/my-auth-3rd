@@ -1,8 +1,8 @@
 
 import { useDispatch } from "react-redux"; //, useSelector
-import { useModal } from '../../context/Modal';
+import { useModal } from '../context/Modal';
 //import * as reviewActions from '../../store/reviews';
-import * as spotActions from '../../store/spots';
+import * as spotActions from '../store/spots';
 
 const ManageSpotDeleteModal =({spotId}) => {
     const dispatch = useDispatch()

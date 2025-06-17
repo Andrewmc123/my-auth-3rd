@@ -1,112 +1,122 @@
-import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
-import { useNavigate } from "react-router-dom"
-import {createSpotThunk } from "../../store/spots"
-import { createSpotImageThunk } from "../../store/images"
-import "./CreateSpotForm.css"
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { updateSpotThunk, readSpotThunk } from "../../store/spots";
+import { createSpotImageThunk, deleteSpotImageThunk } from "../../store/images";
 
-const CreateSpotForm = ()=> {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+const UpdateSpotForm = () => {
+  const { spotId } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const [country, setCountry] = useState('')
-  const [address, setAddress] = useState('')
-  const [city, setCity] = useState('')
-  const [state, setState] = useState('')
-  const [description, setDescription] = useState('')
-  const [name, setName] = useState('')
-  const [price, setPrice] = useState('')
-  const lat = 0;
-  const lng =0;
-  const [previewImage, setPreviewImage] = useState('')
+  const spot = useSelector((state) => state.spots[spotId]);
+
+  const [country, setCountry] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [description, setDescription] = useState("");
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [previewImage, setPreviewImage] = useState("");
   const [imageUrl1, setImageUrl1] = useState("");
   const [imageUrl2, setImageUrl2] = useState("");
   const [imageUrl3, setImageUrl3] = useState("");
   const [imageUrl4, setImageUrl4] = useState("");
-  const [formErrors, setFormErrors] = useState({})
-  const [hasSubmitted, setHasSubmitted]= useState(false)
+  const [formErrors, setFormErrors] = useState({});
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
-  useEffect(() =>{
-    const errors={}
-    if(hasSubmitted === true){
-      if(!country) errors.country = 'Country is required'
-      if(!address) errors.address = 'Address is required'
-      if(!city) errors.city = 'City is required'
-      if(!state) errors.state = 'State is required'
-      if(!description || description.length < 30) errors.description = 'Description needs a minimum of 30 characters'
-      if(!name) errors.name = 'Name is required'
-      if(!price) errors.price = 'Price is required'
-      if(!previewImage) errors.previewImage = 'Preview image is required'
-      if(!imageUrl1 || !/\.jpg|\.jpeg|\.png$/i.test(imageUrl1)) errors.imageUrl1 = 'Image URL must end in .png .jpg or .jpeg'
-      if(!imageUrl2 || !/\.jpg|\.jpeg|\.png$/i.test(imageUrl2)) errors.imageUrl2 = 'Image URL must end in .png .jpg or .jpeg'
-      if(!imageUrl3 || !/\.jpg|\.jpeg|\.png$/i.test(imageUrl3)) errors.imageUrl3 = 'Image URL must end in .png .jpg or .jpeg'
-      if(!imageUrl4 || !/\.jpg|\.jpeg|\.png$/i.test(imageUrl4)) errors.imageUrl4 = 'Image URL must end in .png .jpg or .jpeg'
-      
-     setFormErrors(errors)}
-  }, [hasSubmitted, country, address, city, state, description, name, price, previewImage, imageUrl1, imageUrl2, imageUrl3, imageUrl4 ]) //lat, lng
+  useEffect(() => {
+    if (spotId) {
+      dispatch(readSpotThunk(spotId));
+    }
+  }, [dispatch, spotId]);
 
+  useEffect(() => {
+    if (spot) {
+      setCountry(spot.country);
+      setAddress(spot.address);
+      setCity(spot.city);
+      setState(spot.state);
+      setDescription(spot.description);
+      setName(spot.name);
+      setPrice(spot.price);
 
+      if (spot.SpotImages && spot.SpotImages.length > 0) {
+        const preview = spot.SpotImages.find((img) => img.preview === true);
+        const nonPreviewImages = spot.SpotImages.filter((img) => img.preview === false);
+
+        setPreviewImage(preview ? preview.url : "");
+        setImageUrl1(nonPreviewImages[0] ? nonPreviewImages[0].url : "");
+        setImageUrl2(nonPreviewImages[1] ? nonPreviewImages[1].url : "");
+        setImageUrl3(nonPreviewImages[2] ? nonPreviewImages[2].url : "");
+        setImageUrl4(nonPreviewImages[3] ? nonPreviewImages[3].url : "");
+      }
+    }
+  }, [spot]);
+
+  useEffect(() => {
+    const errors = {};
+    if (hasSubmitted) {
+      if (!country) errors.country = "Country is required";
+      if (!address) errors.address = "Address is required";
+      if (!city) errors.city = "City is required";
+      if (!state) errors.state = "State is required";
+      if (!description || description.length < 30) errors.description = "Description needs a minimum of 30 characters";
+      if (!name) errors.name = "Name is required";
+      if (!price) errors.price = "Price is required";
+      if (!previewImage) errors.previewImage = "Preview image is required";
+      if (imageUrl1 && !/\.jpg|\.jpeg|\.png$/i.test(imageUrl1)) errors.imageUrl1 = "Image URL must end in .png .jpg or .jpeg";
+      if (imageUrl2 && !/\.jpg|\.jpeg|\.png$/i.test(imageUrl2)) errors.imageUrl2 = "Image URL must end in .png .jpg or .jpeg";
+      if (imageUrl3 && !/\.jpg|\.jpeg|\.png$/i.test(imageUrl3)) errors.imageUrl3 = "Image URL must end in .png .jpg or .jpeg";
+      if (imageUrl4 && !/\.jpg|\.jpeg|\.png$/i.test(imageUrl4)) errors.imageUrl4 = "Image URL must end in .png .jpg or .jpeg";
+      setFormErrors(errors);
+    }
+  }, [hasSubmitted, country, address, city, state, description, name, price, previewImage, imageUrl1, imageUrl2, imageUrl3, imageUrl4]);
 
   const handleSubmit = async (e) => {
-    setHasSubmitted(true)
-    e.preventDefault()
-    const spotData ={
+    e.preventDefault();
+    setHasSubmitted(true);
+
+    if (Object.keys(formErrors).length > 0) return;
+
+    const spotData = {
       address,
       city,
       state,
       country,
-      lat,
-      lng,
+      lat: spot.lat || 0,
+      lng: spot.lng || 0,
       name,
       description,
-      price
+      price,
+    };
+
+    const updatedSpot = await dispatch(updateSpotThunk(spotId, spotData));
+
+    if (updatedSpot) {
+      const existingPreview = spot.SpotImages.find((img) => img.preview === true);
+      if (!existingPreview || existingPreview.url !== previewImage) {
+        await dispatch(createSpotImageThunk(spotId, { url: previewImage, preview: true }));
+      }
+
+      const nonPreviewImages = spot.SpotImages.filter((img) => img.preview === false);
+      for (const img of nonPreviewImages) {
+        await dispatch(deleteSpotImageThunk(img.id));
+      }
+
+      if (imageUrl1) await dispatch(createSpotImageThunk(spotId, { url: imageUrl1, preview: false }));
+      if (imageUrl2) await dispatch(createSpotImageThunk(spotId, { url: imageUrl2, preview: false }));
+      if (imageUrl3) await dispatch(createSpotImageThunk(spotId, { url: imageUrl3, preview: false }));
+      if (imageUrl4) await dispatch(createSpotImageThunk(spotId, { url: imageUrl4, preview: false }));
+
+      navigate(`/spots/${spotId}`);
     }
- 
-
-
-      if(previewImage !==""){
-        dispatch(createSpotThunk(spotData))
-      .then((data) =>{
-        dispatch(createSpotImageThunk(data.id, {url: previewImage, preview: true}))
-        return data
-      })
-      .then((data)=>{
-        if(imageUrl1){
-        dispatch(createSpotImageThunk(data.id, {url: imageUrl1, preview: false}))
-        }
-          return data
-      })
-      .then((data)=>{
-        if(imageUrl2){
-        dispatch(createSpotImageThunk(data.id, {url: imageUrl2, preview: false}))
-        }
-          return data
-      })
-      .then((data)=>{
-        if(imageUrl3){
-        dispatch(createSpotImageThunk(data.id, {url: imageUrl3, preview: false}))
-        }
-          return data
-      })
-      .then((data)=>{
-        if(imageUrl4){
-        dispatch(createSpotImageThunk(data.id, {url: imageUrl4, preview: false}))
-        }
-          return data
-
-      })
-      .then((data)=>{
-        navigate(`/spots/${data.id}`)
-      })
-    }
-
-
-
-  }
+  };
 
   return (
-    <div className="create-spot-form-container">
-      <h1 className="title">Create a New Spot</h1>
+    <div className="update-spot-form-container">
+      <h1>Update Your Spot</h1>
       <form onSubmit={handleSubmit} className="long-forms">
         <div className="form-section">
           <h2>Where&apos;s your place located?</h2>
@@ -134,7 +144,7 @@ const CreateSpotForm = ()=> {
           </div>
 <div className="location">
 
-          <div className="form-group">
+          <div className="form-group CityState">
             <label>City</label>
             <input className="cityInput"
               type="text"
@@ -146,7 +156,7 @@ const CreateSpotForm = ()=> {
           </div>
  <div className="CityState"><label></label><br /><br />,</div><span></span>
 
-          <div className="form-group">
+          <div className="form-group CityState">
             <label>State</label>
             <input className="stateInput"
               type="text"
@@ -158,6 +168,7 @@ const CreateSpotForm = ()=> {
           </div>
         </div>
         </div>
+
 
         <div className="form-section">
           <h2>Describe your place to guests</h2>
@@ -266,10 +277,10 @@ const CreateSpotForm = ()=> {
 
         </div>
 
-        <button type="submit" onClick={e => handleSubmit(e)}>Create Spot</button>
-        {/* {formErrors && <p>{formErrors}</p>} */}
+        <button type="submit">Update Spot</button>
       </form>
     </div>
-  )
-}
-export default CreateSpotForm
+  );
+};
+
+export default UpdateSpotForm;

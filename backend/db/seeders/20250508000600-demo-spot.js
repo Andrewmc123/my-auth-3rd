@@ -11,7 +11,6 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-
     console.log(process.env.NODE_ENV)
   
   // create spots //

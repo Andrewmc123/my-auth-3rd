@@ -1,0 +1,41 @@
+.create-spot-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.create-spot-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-spot-form label {
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.create-spot-form input,
+.create-spot-form textarea {
+  padding: 8px;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.create-spot-form button {
+  padding: 10px;
+  background-color: #ff5a5f;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.create-spot-form button:hover {
+  background-color: #e04e4e;
+}
+
+.error {
+  color: red;
+  margin-bottom: 10px;
+}

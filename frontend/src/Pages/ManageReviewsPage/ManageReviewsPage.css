@@ -1,0 +1,23 @@
+.review-page {
+  padding: 20px;
+}
+
+.review-page h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.review-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.review-item h3 {
+  margin: 0 0 5px;
+}
+
+.review-item p {
+  margin: 5px 0;
+}

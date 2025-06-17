@@ -1,5 +1,7 @@
 // backend/routes/api/index.js
+const express = require('express'); 
 const router = require('express').Router();
+const csrfRouter = require('./csrf'); 
 const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
 const spotsRouter = require('./spots.js'); //

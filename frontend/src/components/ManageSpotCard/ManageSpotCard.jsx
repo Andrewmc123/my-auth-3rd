@@ -2,7 +2,7 @@ import {useState} from "react";
 import { useNavigate } from 'react-router-dom';
 //import { useModal } from '../../context/Modal';
 import OpenModalButton from '../OpenModalButton'
-import ManageSpotDeleteModal from "./ManagSpotDeleteModal";
+import ManageSpotDeleteModal from '../ManageSpotDeleteModal' 
 import { FaStar } from "react-icons/fa";
 import './ManageSpotCard.css'
 

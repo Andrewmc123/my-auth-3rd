@@ -3,9 +3,12 @@ import { useDispatch } from 'react-redux';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Navigation from './components/Navigation/Navigation';
 import * as sessionActions from './store/session';
-import LandingPage from './components/LandingPage/'; 
+import LandingPage from './Pages/LandingPage'; 
 import CreateSpotForm from './components/CreateSpotForm/CreateSpotForm';
-
+import SpotDetailsPage from './Pages/SpotDetailsPage/SpotDetailsPage';
+import ManageSpotsPage from './Pages/ManagaeSpotPage/ManageSpotPage'
+import UpdateSpotForm from './Pages/UpdateSpotPage'
+import ReviewsPage from './Pages/ManageReviewsPage/ManageReviewsPage'
 function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -35,6 +38,22 @@ const router = createBrowserRouter([
        {
         path: '/spots/new',
         element: <CreateSpotForm />
+      },
+      {
+        path:'/spots/:spotId', 
+        element: <SpotDetailsPage /> 
+      }, 
+      { path: '/spots/current',
+        element: <ManageSpotsPage />
+      },
+      {
+        path: '/spots/:spotId/edit',
+        element: <UpdateSpotForm />
+      },
+
+      {
+        path: '/reviews/current', 
+        element: <ReviewsPage />
       },
     
     ]
