@@ -27,7 +27,7 @@ const ManageReviewsPage = () => {
     <div className="manage-reviews-container">
       <h2>Manage Your Reviews</h2>
       {reviews.length === 0 ? (
-        <p>You haven't posted any reviews yet.</p>
+        <p>You haven&apos;t posted any reviews yet.</p>
       ) : (
         <ul className="reviews-list">
           {reviews.map(review => (
