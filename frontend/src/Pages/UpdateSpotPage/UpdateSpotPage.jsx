@@ -4,13 +4,20 @@ import { useNavigate, useParams } from "react-router-dom";
 import { updateSpotThunk, readSpotThunk } from "../../store/spots";
 import { createSpotImageThunk, deleteSpotImageThunk } from "../../store/images";
 
+// I believe this is the form used to update a spot
 const UpdateSpotForm = () => {
+
+  // I believe this gets the spotId from the URL
   const { spotId } = useParams();
+
+  // This is doing setup for dispatch and navigation
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // I believe this grabs the spot data from the Redux store
   const spot = useSelector((state) => state.spots[spotId]);
 
+  // These are the form fields
   const [country, setCountry] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -26,12 +33,14 @@ const UpdateSpotForm = () => {
   const [formErrors, setFormErrors] = useState({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
+  // This is doing the fetch for spot data on page load
   useEffect(() => {
     if (spotId) {
       dispatch(readSpotThunk(spotId));
     }
   }, [dispatch, spotId]);
 
+  // I believe this fills in the form once spot data is loaded
   useEffect(() => {
     if (spot) {
       setCountry(spot.country);
@@ -55,6 +64,7 @@ const UpdateSpotForm = () => {
     }
   }, [spot]);
 
+  // I believe this is checking for form validation errors
   useEffect(() => {
     const errors = {};
     if (hasSubmitted) {
@@ -74,12 +84,14 @@ const UpdateSpotForm = () => {
     }
   }, [hasSubmitted, country, address, city, state, description, name, price, previewImage, imageUrl1, imageUrl2, imageUrl3, imageUrl4]);
 
+  // This is doing the main form submit logic
   const handleSubmit = async (e) => {
     e.preventDefault();
     setHasSubmitted(true);
 
     if (Object.keys(formErrors).length > 0) return;
 
+    // I believe this builds the spot data to send
     const spotData = {
       address,
       city,
@@ -92,6 +104,7 @@ const UpdateSpotForm = () => {
       price,
     };
 
+    // This is doing the spot update
     const updatedSpot = await dispatch(updateSpotThunk(spotId, spotData));
 
     if (updatedSpot) {
@@ -100,187 +113,151 @@ const UpdateSpotForm = () => {
         await dispatch(createSpotImageThunk(spotId, { url: previewImage, preview: true }));
       }
 
+      // I believe this removes old non-preview images
       const nonPreviewImages = spot.SpotImages.filter((img) => img.preview === false);
       for (const img of nonPreviewImages) {
         await dispatch(deleteSpotImageThunk(img.id));
       }
 
+      // This is doing the upload for each new image if provided
       if (imageUrl1) await dispatch(createSpotImageThunk(spotId, { url: imageUrl1, preview: false }));
       if (imageUrl2) await dispatch(createSpotImageThunk(spotId, { url: imageUrl2, preview: false }));
       if (imageUrl3) await dispatch(createSpotImageThunk(spotId, { url: imageUrl3, preview: false }));
       if (imageUrl4) await dispatch(createSpotImageThunk(spotId, { url: imageUrl4, preview: false }));
 
+      // This is doing the redirect after updating
       navigate(`/spots/${spotId}`);
     }
   };
 
+  // I believe this is rendering the full update form
   return (
     <div className="update-spot-form-container">
       <h1>Update Your Spot</h1>
       <form onSubmit={handleSubmit} className="long-forms">
+        
+        {/* I believe this section is for location inputs */}
         <div className="form-section">
-          <h2>Where&apos;s your place located?</h2>
+          <h2>Where's your place located?</h2>
           <p>Guests will only get your exact address once they booked a reservation.</p>
+          
+          {/* Country input */}
           <div className="form-group">
             <label>Country</label>
-            <input
-              type="text"
-              placeholder="Country"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-            />
+            <input type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} />
             {formErrors.country && <p className="error">{formErrors.country}</p>}
           </div>
 
+          {/* Address input */}
           <div className="form-group">
             <label>Street Address</label>
-            <input
-              type="text"
-              placeholder="Address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
+            <input type="text" placeholder="Address" value={address} onChange={(e) => setAddress(e.target.value)} />
             {formErrors.address && <p className="error">{formErrors.address}</p>}
           </div>
-<div className="location">
 
-          <div className="form-group CityState">
-            <label>City</label>
-            <input className="cityInput"
-              type="text"
-              placeholder="City"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              />
-            {formErrors.city && <p className="error">{formErrors.city}</p>}
-          </div>
- <div className="CityState"><label></label><br /><br />,</div><span></span>
+          <div className="location">
 
-          <div className="form-group CityState">
-            <label>State</label>
-            <input className="stateInput"
-              type="text"
-              placeholder="State"
-              value={state}
-              onChange={(e) => setState(e.target.value)}
-            />
-            {formErrors.state && <p className="error">{formErrors.state}</p>}
+            {/* City input */}
+            <div className="form-group CityState">
+              <label>City</label>
+              <input className="cityInput" type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
+              {formErrors.city && <p className="error">{formErrors.city}</p>}
+            </div>
+
+            <div className="CityState"><label></label><br /><br /></div><span></span>
+
+            {/* State input */}
+            <div className="form-group CityState">
+              <label>State</label>
+              <input className="stateInput" type="text" placeholder="State" value={state} onChange={(e) => setState(e.target.value)} />
+              {formErrors.state && <p className="error">{formErrors.state}</p>}
+            </div>
           </div>
         </div>
-        </div>
 
-
+        {/* I believe this section is for the description */}
         <div className="form-section">
           <h2>Describe your place to guests</h2>
           <p>Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood.</p>
           <div className="form-group">
             <label>Description</label>
-            <textarea
-              placeholder="Please write at least 30 characters"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
+            <textarea placeholder="Please write at least 30 characters" value={description} onChange={(e) => setDescription(e.target.value)} />
             {formErrors.description && <p className="error">{formErrors.description}</p>}
           </div>
         </div>
 
+        {/* I believe this section is for the title of the spot */}
         <div className="form-section">
           <h2>Create a title for your spot</h2>
           <p>Catch guests attention with a spot title that highlights what makes your place special.</p>
           <div className="form-group">
             <label>Name</label>
-            <input
-              type="text"
-              placeholder="Name of your spot"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+            <input type="text" placeholder="Name of your spot" value={name} onChange={(e) => setName(e.target.value)} />
             {formErrors.name && <p className="error">{formErrors.name}</p>}
           </div>
         </div>
 
+        {/* This section is for setting the price */}
         <div className="form-section">
           <h2>Set a base price for your spot</h2>
           <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
           <div className="form-group">
             <label>Price per night (USD)</label>
-            <div className="price"> <span>$</span>
-              <input
-              type="number"
-              placeholder="Price per night (USD)"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              />
-            {formErrors.price && <p className="error">{formErrors.price}</p>}
+            <div className="price">
+              <span>$</span>
+              <input type="number" placeholder="Price per night (USD)" value={price} onChange={(e) => setPrice(e.target.value)} />
+              {formErrors.price && <p className="error">{formErrors.price}</p>}
+            </div>
           </div>
-              </div>
         </div>
 
+        {/* I believe this section is for image links */}
         <div className="form-section">
           <h2>Liven up your spot with photos</h2>
           <p>Submit a link to at least one photo to publish your spot.</p>
-          <div className="form-group">
 
-            <input
-              type="text"
-              placeholder="Preview Image URL"
-              value={previewImage}
-              onChange={(e) => setPreviewImage(e.target.value)}
-            />
+          <div className="form-group">
+            <input type="text" placeholder="Preview Image URL" value={previewImage} onChange={(e) => setPreviewImage(e.target.value)} />
             {formErrors.previewImage && <p className="error">{formErrors.previewImage}</p>}
           </div>
+
           <br />
-            <div  className="form-group">
 
-              <input
-                type="text"
-                placeholder="Image URL"
-                value={imageUrl1}
-                onChange={(e) => setImageUrl1( e.target.value)}
-              />
-              {formErrors.imageUrl1 && <p className="error">{formErrors.imageUrl1}</p>}
-            </div>
-            <br />
-            <div  className="form-group">
+          <div className="form-group">
+            <input type="text" placeholder="Image URL" value={imageUrl1} onChange={(e) => setImageUrl1(e.target.value)} />
+            {formErrors.imageUrl1 && <p className="error">{formErrors.imageUrl1}</p>}
+          </div>
 
-              <input
-                type="text"
-                placeholder="Image URL"
-                value={imageUrl2}
-                onChange={(e) => setImageUrl2( e.target.value)}
-              />
-              {formErrors.imageUrl2 && <p className="error">{formErrors.imageUrl2}</p>}
-            </div>
-            <br />
-            <div  className="form-group">
+          <br />
 
-              <input
-                type="text"
-                placeholder="Image URL"
-                value={imageUrl3}
-                onChange={(e) => setImageUrl3( e.target.value)}
-              />
-              {formErrors.imageUrl3 && <p className="error">{formErrors.imageUrl3}</p>}
-            </div>
-            <br />
-            <div  className="form-group">
+          <div className="form-group">
+            <input type="text" placeholder="Image URL" value={imageUrl2} onChange={(e) => setImageUrl2(e.target.value)} />
+            {formErrors.imageUrl2 && <p className="error">{formErrors.imageUrl2}</p>}
+          </div>
 
-              <input
-                type="text"
-                placeholder="Image URL"
-                value={imageUrl4}
-                onChange={(e) => setImageUrl4( e.target.value)}
-              />
-              {formErrors.imageUrl4 && <p className="error">{formErrors.imageUrl4}</p>}
-            </div>
-            <br />
+          <br />
 
+          <div className="form-group">
+            <input type="text" placeholder="Image URL" value={imageUrl3} onChange={(e) => setImageUrl3(e.target.value)} />
+            {formErrors.imageUrl3 && <p className="error">{formErrors.imageUrl3}</p>}
+          </div>
+
+          <br />
+
+          <div className="form-group">
+            <input type="text" placeholder="Image URL" value={imageUrl4} onChange={(e) => setImageUrl4(e.target.value)} />
+            {formErrors.imageUrl4 && <p className="error">{formErrors.imageUrl4}</p>}
+          </div>
+
+          <br />
         </div>
 
+        {/* This is the final submit button */}
         <button type="submit">Update Spot</button>
       </form>
     </div>
   );
 };
 
+// I believe this lets other files use the update spot form
 export default UpdateSpotForm;
