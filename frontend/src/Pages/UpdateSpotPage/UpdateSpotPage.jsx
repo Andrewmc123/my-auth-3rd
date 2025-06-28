@@ -138,7 +138,7 @@ const UpdateSpotForm = () => {
         
         {/* I believe this section is for location inputs */}
         <div className="form-section">
-          <h2>Where's your place located?</h2>
+          <h2>Where&apos;s your place located?</h2>
           <p>Guests will only get your exact address once they booked a reservation.</p>
           
           {/* Country input */}

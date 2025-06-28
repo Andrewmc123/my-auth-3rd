@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { readSpotThunk } from "../../store/spots";
 import { readReviewsThunk } from "../../store/reviews";
 import SpotInfo from "../../components/SpotInfo/SpotInfo";
-import ReviewInfo from "/../components/ReviewInfo/ReviewInfo";
+import ReviewInfo from "../../components/ReviewInfo/ReviewInfo";
 
 // I believe this sets up the SpotDetailsPage component
 const SpotDetailsPage = () => {
