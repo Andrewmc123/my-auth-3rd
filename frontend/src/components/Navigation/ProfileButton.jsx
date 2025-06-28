@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom'; // This is used to redirect the user after logout
 import { FaUserCircle } from 'react-icons/fa'; // This is the user icon that appears in the button
 import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem'; // This creates the menu items
@@ -11,6 +12,7 @@ import './ProfileButton.css'
 // This component creates the profile button and dropdown menu
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // This allows us to navigate to the home page
   const [showMenu, setShowMenu] = useState(false); // Controls whether the menu is visible
   const ulRef = useRef(); // Used to reference the menu element
 
@@ -42,7 +44,8 @@ function ProfileButton({ user }) {
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
-    closeMenu();
+    closeMenu(); // This closes the menu
+    navigate('/'); // This sends the user back to the home page
   };
 
   // This sets the class name for the dropdown menu
@@ -56,20 +59,27 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
-            <li>{user.email}</li>
+            {/* This shows the greeting with the user's first name */}
+            <li onClick={(e) => e.stopPropagation()}>Hello, {user.firstName}</li>
+
+            {/* This shows the user's email */}
+            <li onClick={(e) => e.stopPropagation()}>{user.email}</li>
+
+            {/* This is the logout button */}
             <li>
               <button onClick={logout}>Log Out</button>
             </li>
           </>
         ) : (
           <>
+            {/* This opens the login modal */}
             <OpenModalMenuItem
               itemText="Log In"
               onItemClick={closeMenu}
               modalComponent={<LoginFormModal />}
             />
+
+            {/* This opens the signup modal */}
             <OpenModalMenuItem
               itemText="Sign Up"
               onItemClick={closeMenu}

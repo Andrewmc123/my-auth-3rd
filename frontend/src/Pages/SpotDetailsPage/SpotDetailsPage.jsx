@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { useParams } from "react-router-dom"
-import { readSpotThunk } from "../../store/spots"
-import { readReviewsThunk } from "../../store/reviews"
-import SpotInfo from "../../components/SpotInfo/SpotInfo"
-import ReviewInfo from "../../components/ReviewInfo/ReviewInfo"
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { readSpotThunk } from "../../store/spots";
+import { readReviewsThunk } from "../../store/reviews";
+import SpotInfo from "../../components/SpotInfo/SpotInfo";
+import ReviewInfo from "../../components/ReviewInfo/ReviewInfo";
 
 // I believe this sets up the SpotDetailsPage component
 const SpotDetailsPage = () => {
@@ -48,4 +48,4 @@ const SpotDetailsPage = () => {
 }
 
 // I believe this lets other files use this page
-export default SpotDetailsPage
+export default SpotDetailsPage;

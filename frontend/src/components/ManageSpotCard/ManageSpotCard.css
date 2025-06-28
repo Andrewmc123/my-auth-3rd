@@ -1,0 +1,106 @@
+.spot-card {
+  background-color: #2f2f2f; /* dark grey background */
+  color: white;
+  border-radius: 6px;
+  padding: 12px;
+  margin: 12px 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.image-wrapper {
+  width: 100%;
+  height: 220px; /* taller to fill width more */
+  overflow: hidden;
+  border-radius: 6px;
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.spot-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.spot-details {
+  font-size: 15px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #ffc107; /* gold star */
+}
+
+.spot-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.spot-buttons button {
+  flex: 1;
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 8px 0;
+  border-radius: 4px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.spot-buttons button:hover {
+  background-color: white;
+  color: #2f2f2f;
+}
+.spot-card {
+  max-width: 600px;  /* limits how wide the whole card gets */
+  margin-left: auto;  /* centers horizontally */
+  margin-right: auto; /* centers horizontally */
+  /* keep your other styles */
+  background-color: #2f2f2f;
+  color: white;
+  border-radius: 6px;
+  padding: 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.image-wrapper {
+  width: 100%;
+  max-width: 600px; /* match card max width */
+  height: 220px;
+  overflow: hidden;
+  border-radius: 6px;
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.spot-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  max-width: 100%; /* keep image from exceeding container */
+  max-height: 100%;
+}

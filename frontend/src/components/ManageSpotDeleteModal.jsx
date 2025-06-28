@@ -1,42 +1,36 @@
+import React from "react";
+import { useDispatch } from "react-redux";
+import { deleteSpotThunk } from "../store/spots";
 
-import { useDispatch } from "react-redux"; //, useSelector
-import { useModal } from '../context/Modal';
-//import * as reviewActions from '../../store/reviews';
-import * as spotActions from '../store/spots';
+// I believe this modal confirms spot deletion with yes/no buttons
+const ManageSpotDeleteModal = ({ spotId, onClose, onDeleteSuccess }) => {
+  const dispatch = useDispatch();
 
-const ManageSpotDeleteModal =({spotId}) => {
-    const dispatch = useDispatch()
-    const { closeModal } = useModal();
+  // I believe this runs when user confirms delete
+  const handleDelete = async () => {
+    await dispatch(deleteSpotThunk(spotId));
+    onDeleteSuccess(spotId);  // tell parent to remove spot from list
+    onClose();                // close the modal
+  };
 
-
-    const handleClickDelete = async (e) => {
-        e.preventDefault();
-
-        await dispatch(spotActions.deleteSpotThunk(spotId)).then(closeModal())
-        // await dispatch(spotActions.readSpotThunk(spotId)).then(closeModal())
-      };
-
-    return(
-        <div className="review-modal-container">
-            <h1 >Confirm Delete</h1>
-            <div>Are you sure you want to remove this spot from the listings?</div>
-            <br />
-            <button
-                onClick={handleClickDelete}
-                className="delete-review-button butt-wide"
-                style={{ backgroundColor: '#E62539' }}
-                >
-                Yes (Delete Spot)
-            </button>
-            <button
-                onClick={closeModal}
-                className="keep-review-button butt-wide"
-                style={{ backgroundColor: '#333333' }}
-                >
-                No (Keep Spot)
-            </button>
+  return (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <h2>Confirm Delete</h2>
+        <p>Are you sure you want to remove this spot?</p>
+        <div className="modal-buttons">
+          {/* Red button to confirm deletion */}
+          <button className="btn btn-danger" onClick={handleDelete}>
+            Yes (Delete Spot)
+          </button>
+          {/* Dark grey button to cancel */}
+          <button className="btn btn-secondary" onClick={onClose}>
+            No (Keep Spot)
+          </button>
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
-export default ManageSpotDeleteModal
+export default ManageSpotDeleteModal;

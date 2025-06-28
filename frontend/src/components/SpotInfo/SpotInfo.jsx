@@ -1,4 +1,4 @@
-//import React from "react"
+//import React from "react" 
 import { FaStar } from "react-icons/fa";
 import "./SpotInfo.css";
 
@@ -16,22 +16,28 @@ const SpotInfo = ({ spotDetails }) => {
     state
   } = spotDetails;
 
-  // Get the first preview image as the large image
+  // I believe this finds the main preview image to show large
   const largeImage = SpotImages.find(img => img.preview);
-  // Get the remaining 4 non-preview images as small images
+
+  // This is doing a filter to grab the other four images for thumbnails
   const smallImages = SpotImages.filter(img => !img.preview).slice(0, 4);
 
+  // I believe this triggers the 'Feature Coming Soon' alert on reserve
   const handleClick = () => {
     alert('Feature Coming Soon...');
   };
 
   return (
     <div className="spot-details-container">
+      {/* This is showing the spot's title */}
       <h2 className="spot-title">{name}</h2>
+
+      {/* This is showing the full location */}
       <p className="spot-location">
         {city}, {state}, {country}
       </p>
-      
+
+      {/* This is showing the main preview image and four smaller ones */}
       <div className="spot-images-container">
         <img 
           src={largeImage?.url} 
@@ -53,24 +59,27 @@ const SpotInfo = ({ spotDetails }) => {
         </div>
       </div>
 
+      {/* This is doing the layout for description and callout box */}
       <div className="spot-details-content">
         <div className="spot-details-left">
+          {/* This is showing who the host is */}
           <h2 className="spot-host">
             Hosted by {Owner.firstName} {Owner.lastName}
           </h2>
+
+          {/* This is showing the description of the spot */}
           <p className="spot-description">{description}</p>
         </div>
 
+        {/* This is the callout box with price and rating */}
         <div className="callout-container">
           <div className="callout-text">
             <span className="callout-price">${price} night</span>
             <p className="callout-rating">
               <FaStar />
-              {avgStarRating
-                ? avgStarRating.toFixed(1)
-                : "New"}
-              {numReviews ? "・" + numReviews : ""}
-              {numReviews === 0 ? "" : numReviews > 1 ? "reviews" : "review"}
+              {avgStarRating ? avgStarRating.toFixed(1) : "New"}
+              {/* This is doing the dot and review count formatting */}
+              {numReviews > 0 ? ` · ${numReviews} ${numReviews === 1 ? "Review" : "Reviews"}` : ""}
             </p>
           </div>
           <div className="button-container">

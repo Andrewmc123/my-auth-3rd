@@ -1,6 +1,6 @@
 // frontend/src/components/LoginFormModal/LoginFormModal.jsx
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import * as sessionActions from '../../store/session';
@@ -14,19 +14,49 @@ function LoginFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
+  // I believe this disables the button until username/password length is valid
+  const isDisabled = credential.length < 4 || password.length < 6;
+
+  // I believe this resets the form on open/close
+  useEffect(() => {
+    setCredential("");
+    setPassword("");
+    setErrors({});
+  }, []);
+
   if (sessionUser) return null;
 
+  // I believe this handles login form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
     return dispatch(sessionActions.login({ credential, password }))
       .then(closeModal)
-      .catch(
-        async (res) => {
-          const data = await res.json();
-          if (data?.errors) setErrors(data.errors);
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data?.errors) {
+          setErrors(data.errors);
+        } else {
+          // This shows fallback error if backend doesn’t give specific message
+          setErrors({ credential: "The provided credentials were invalid" });
         }
-      );
+      });
+  };
+
+  // This logs in the demo user
+  const handleDemoLogin = (e) => {
+    e.preventDefault();
+    setErrors({});
+    dispatch(sessionActions.login({ credential: 'demo@user.io', password: 'password' }))
+      .then(closeModal)
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data?.errors) {
+          setErrors(data.errors);
+        } else {
+          setErrors({ credential: "The provided credentials were invalid" });
+        }
+      });
   };
 
   return (
@@ -54,7 +84,12 @@ function LoginFormModal() {
           />
         </div>
         {errors.credential && <p>{errors.credential}</p>}
-        <button type="submit">Log In</button>
+
+        {/* This is the login submit button */}
+        <button type="submit" disabled={isDisabled}>Log In</button>
+
+        {/* This is the demo login button */}
+        <button type="button" onClick={handleDemoLogin}>Log in as Demo User</button>
       </form>
     </div>
   );

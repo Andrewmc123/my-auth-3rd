@@ -7,7 +7,6 @@ import ReviewDetails from "./ReviewDetails";
 
 
 
-
 const ReviewInfo = ({ spotDetails , currUser, spotId }) => {
     const {   
         ownerId, 
@@ -90,4 +89,4 @@ const ReviewInfo = ({ spotDetails , currUser, spotId }) => {
     )
 }
 
-export default ReviewInfo
+export default ReviewInfo;
