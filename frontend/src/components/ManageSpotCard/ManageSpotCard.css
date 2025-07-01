@@ -1,13 +1,4 @@
-.spot-card {
-  background-color: #2f2f2f; /* dark grey background */
-  color: white;
-  border-radius: 6px;
-  padding: 12px;
-  margin: 12px 0;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-}
+
 
 .image-wrapper {
   width: 100%;
@@ -72,19 +63,7 @@
   background-color: white;
   color: #2f2f2f;
 }
-.spot-card {
-  max-width: 600px;  /* limits how wide the whole card gets */
-  margin-left: auto;  /* centers horizontally */
-  margin-right: auto; /* centers horizontally */
-  /* keep your other styles */
-  background-color: #2f2f2f;
-  color: white;
-  border-radius: 6px;
-  padding: 12px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-}
+
 
 .image-wrapper {
   width: 100%;

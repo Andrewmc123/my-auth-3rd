@@ -25,7 +25,7 @@ const ManageSpotCard = ({spot}) => {
      
         return (
             <div
-            className="spot-card"
+            className="manage-spot-card"
             onClick={handleClick}
             onMouseEnter={() => setShowTooltip(true)}
             onMouseLeave={() => setShowTooltip(false)}

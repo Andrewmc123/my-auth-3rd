@@ -54,7 +54,7 @@ const ManageSpotsPage = () => {
             </div>
 
             {/* I believe this section shows all the user's spots in cards */}
-            <div className="spot-list">
+            <div className="">
                 {mySpots.map((spot) => (    
                     <ManageSpotCard key={spot.id} spot={spot} />
                 ))}

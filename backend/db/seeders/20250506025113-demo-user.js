@@ -10,30 +10,31 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    options.tableName = 'Users'; 
+    options.tableName = 'Users';
     return queryInterface.bulkInsert(options, [
       {
-        email: 'demo@user.io',
-        firstName: 'Tiffany',
-        lastName: 'Hadash',
-        username: 'Demo-lition',
-        hashedPassword: bcrypt.hashSync('password')
+        email: 'explorer@user.io',
+        firstName: 'Lena',
+        lastName: 'Travels',
+        username: 'WanderQueen',
+        hashedPassword: bcrypt.hashSync('explore123')
       },
       {
-        email: 'user1@user.io',
-        firstName: 'Andrew',
-        lastName: 'Mclean',
-        username: 'FakeUser1',
-        hashedPassword: bcrypt.hashSync('password2')
+        email: 'skyline@user.io',
+        firstName: 'Marcus',
+        lastName: 'Loft',
+        username: 'CityDweller',
+        hashedPassword: bcrypt.hashSync('urbanlife')
       },
       {
-        email: 'user2@user.io',
-        firstName: 'Alchemy',
-        lastName: 'Mclean',
-        username: 'FakeUser2',
-        hashedPassword: bcrypt.hashSync('password3')
+        email: 'cozyvibes@user.io',
+        firstName: 'Nina',
+        lastName: 'Wood',
+        username: 'CabinChic',
+        hashedPassword: bcrypt.hashSync('pineforest')
       }
     ], { validate: true });
+
   },
 
   async down (queryInterface, Sequelize) {

@@ -12,94 +12,179 @@ if (process.env.NODE_ENV === 'production') {
 module.exports = {
   async up (queryInterface, Sequelize) {
     await SpotImage.bulkCreate([
-      // Lake Cabin (Wasilla, Alaska) - Living Room
+      // Spot 1
       {
         spotId: 1,
-        url: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1280',
+        url: '/spot1img.jpg',
         preview: true,
       },
-      // Living Room Interior
       {
         spotId: 1,
-        url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1280',
+        url: '/spot1bed.jpg',
         preview: false,
       },
-      // Bedroom Interior
       {
         spotId: 1,
-        url: 'https://images.unsplash.com/photo-1522708323569-d613b698804f?w=1280',
+        url: '/spot1kit.jpg',
         preview: false,
       },
-      // Kitchen Interior
       {
         spotId: 1,
-        url: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1280',
-        preview: false,
-      },
-      // Bathroom Interior
-      {
-        spotId: 1,
-        url: 'https://images.unsplash.com/photo-1558478551-1a378f63328e?w=1280',
-        preview: false,
-      },
-      // Backyard
-      {
-        spotId: 1,
-        url: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1280',
+        url: '/spot1bath.jpg',
         preview: false,
       },
 
-      // Winery Getaway (Sonoma, California)
+      // Spot 2
       {
         spotId: 2,
-        url: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1280',
+        url: '/spot2img.jpg',
         preview: true,
       },
       {
         spotId: 2,
-        url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1280',
+        url: '/spot2bed.jpg',
         preview: false,
       },
       {
         spotId: 2,
-        url: 'https://images.unsplash.com/photo-1522708323569-d613b698804f?w=1280',
+        url: '/spot2kit.jpg',
         preview: false,
       },
       {
         spotId: 2,
-        url: 'https://images.unsplash.com/photo-1558478551-1a378f63328e?w=1280',
-        preview: false,
-      },
-      {
-        spotId: 2,
-        url: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1280',
+        url: '/spot2bath.jpg',
         preview: false,
       },
 
-      // Downtown Hidden Gem (Denver, Colorado)
+      // Spot 3
       {
         spotId: 3,
-        url: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1280',
+        url: '/spot3img.jpg',
         preview: true,
       },
       {
         spotId: 3,
-        url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1280',
+        url: '/spot3bed.jpg',
         preview: false,
       },
       {
         spotId: 3,
-        url: 'https://images.unsplash.com/photo-1522708323569-d613b698804f?w=1280',
+        url: '/spot3kit.jpg',
         preview: false,
       },
       {
         spotId: 3,
-        url: 'https://images.unsplash.com/photo-1558478551-1a378f63328e?w=1280',
+        url: '/spot3bath.jpg',
+        preview: false,
+      },
+
+      // Spot 4
+      {
+        spotId: 4,
+        url: '/spot4img.jpg',
+        preview: true,
+      },
+      {
+        spotId: 4,
+        url: '/spot4bed.jpg',
         preview: false,
       },
       {
-        spotId: 3,
-        url: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1280',
+        spotId: 4,
+        url: '/spot4kit.jpg',
+        preview: false,
+      },
+      {
+        spotId: 4,
+        url: '/spot4bath.jpg',
+        preview: false,
+      },
+
+      // Spot 5
+      {
+        spotId: 5,
+        url: '/spot5img.jpg',
+        preview: true,
+      },
+      {
+        spotId: 5,
+        url: '/spot5bed.jpg',
+        preview: false,
+      },
+      {
+        spotId: 5,
+        url: '/spot5kit.jpg',
+        preview: false,
+      },
+      {
+        spotId: 5,
+        url: '/spot5bath.jpg',
+        preview: false,
+      },
+
+      // Spot 6
+      {
+        spotId: 6,
+        url: '/spot6img.jpg',
+        preview: true,
+      },
+      {
+        spotId: 6,
+        url: '/spot6bed.jpg',
+        preview: false,
+      },
+      {
+        spotId: 6,
+        url: '/spot6kit.jpg',
+        preview: false,
+      },
+      {
+        spotId: 6,
+        url: '/spot6bath.jpg',
+        preview: false,
+      },
+
+      // Spot 7
+      {
+        spotId: 7,
+        url: '/spot7img.jpg',
+        preview: true,
+      },
+      {
+        spotId: 7,
+        url: '/spot7bed.jpg',
+        preview: false,
+      },
+      {
+        spotId: 7,
+        url: '/spot7kit.jpg',
+        preview: false,
+      },
+      {
+        spotId: 7,
+        url: '/spot7bath.jpg',
+        preview: false,
+      },
+
+      // Spot 8
+      {
+        spotId: 8,
+        url: '/spot4img.jpg',
+        preview: true,
+      },
+      {
+        spotId: 8,
+        url: '/spot4bed.jpg',
+        preview: false,
+      },
+      {
+        spotId: 8,
+        url: '/spot4kit.jpg',
+        preview: false,
+      },
+      {
+        spotId: 8,
+        url: '/spot4bath.jpg',
         preview: false,
       },
 
@@ -112,11 +197,6 @@ module.exports = {
       {
         spotId: 4,
         url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1280',
-        preview: false,
-      },
-      {
-        spotId: 4,
-        url: 'https://images.unsplash.com/photo-1522708323569-d613b698804f?w=1280',
         preview: false,
       },
       {
@@ -143,7 +223,7 @@ module.exports = {
       },
       {
         spotId: 5,
-        url: 'https://images.unsplash.com/photo-1522708323569-d613b698804f?w=1280',
+        url: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1280',
         preview: false,
       },
       {
@@ -170,7 +250,7 @@ module.exports = {
       },
       {
         spotId: 6,
-        url: 'https://images.unsplash.com/photo-1522708323569-d613b698804f?w=1280',
+        url: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1280',
         preview: false,
       },
       {
@@ -192,7 +272,7 @@ module.exports = {
       // Kitchen - Pixabay
       {
         spotId: 6,
-        url: 'https://cdn.pixabay.com/photo/2018/01/29/12/09/room-3116324_1280.jpg',
+        url: 'https://images.unsplash.com/photo-1505028118505-266749351347?w=1280',
         preview: false
       },
       // Bathroom - Pexels
@@ -215,7 +295,7 @@ module.exports = {
       },
       {
         spotId: 7,
-        url: 'https://images.unsplash.com/photo-1522708323569-d613b698804f?w=1280',
+        url: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1280',
         preview: false,
       },
       {

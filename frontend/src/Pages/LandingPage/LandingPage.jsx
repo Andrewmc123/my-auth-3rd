@@ -27,8 +27,8 @@ const LandingPage = () => {
   }, [dispatch, setIsLoaded, isLoaded]);
 
   // This is doing the rendering of all the SpotCards on the page
-  return(
-    <>
+  return( 
+    <div className="lpg-container">
       <div className="spot-list">
         {spots &&
           // I believe this loops through all the spots and shows each one in a SpotCard
@@ -37,7 +37,7 @@ const LandingPage = () => {
           ))
         }
       </div>
-    </>
+    </div>
   );
 };
 
