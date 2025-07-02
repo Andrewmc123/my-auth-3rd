@@ -48,11 +48,17 @@ module.exports = {
         stars: 4,
       },
       {
-        spotId: 2,
-        userId: 1,
-        review: "Walking through the vines with my new favorite glass of wine was just what I needed!",
+        spotId: 8,
+        userId: 3,
+        review: "Perfect mountain getaway with stunning views and cozy atmosphere.",
         stars: 5,
       },
+      {
+        spotId: 8,
+        userId: 1,
+        review: "The location is amazing, perfect for hiking and enjoying nature.",
+        stars: 4,
+      }
     ], { validate: true })
   },
 
@@ -60,7 +66,7 @@ module.exports = {
     options.tableName = 'Reviews';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      spotId: { [Op.in]: [1, 2, 3, 5, 7] }
+      spotId: { [Op.in]: [1, 2, 3, 5, 7, 8] }
     }, {});
   }
 };

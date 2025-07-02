@@ -1,9 +1,7 @@
 import  { useEffect, useState } from "react";  
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { loadAllSpots } from "../../store/spots";
 import SpotCard from "../../components/SpotCard/SpotCard";
-import { FaPlus } from "react-icons/fa"; // Import the plus icon
 
 // I believe this is setting up the main landing page function
 const LandingPage = () => {
@@ -28,9 +26,7 @@ const LandingPage = () => {
     }
   }, [dispatch, setIsLoaded, isLoaded]);
 
-  // This is doing the rendering of all the SpotCards on the page
-  const navigate = useNavigate();
-  const currUser = useSelector((state) => state.session.user);
+  
 
   return( 
     <div className="lpg-container">

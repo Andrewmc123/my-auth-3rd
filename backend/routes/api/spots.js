@@ -272,8 +272,12 @@ router.post('/', requireAuth, async (req, res, next) =>{
 });
 
 //GET details of a Spot from an id
-router.get('/:spotId', async (req, res)=> {
-    const {spotId } = req.params;
+router.get('/:spotId', async (req, res) => {
+    const spotId = parseInt(req.params.spotId, 10);
+
+    if (isNaN(spotId)) {
+        return res.status(400).json({ message: "Invalid spot ID" });
+    }
 
     const spot = await Spot.findOne({
         where : {id: spotId},
@@ -307,7 +311,7 @@ router.get('/:spotId', async (req, res)=> {
         reviewCount++;
     })
 
-    spotDetails.avgStarRating = reviewCount > 0 ? parseFloat((totalStars / reviewCount).toFixed(1)) : null;
+    spotDetails.avgRating = reviewCount > 0 ? parseFloat((totalStars / reviewCount).toFixed(1)) : null;
     spotDetails.numReviews = reviewCount;
 
     spotDetails.ownerId = spotDetails.Owner.id;
