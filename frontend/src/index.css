@@ -1,47 +1,171 @@
-/* TODO: Add sitewide styles */
-body{
-    width:100%; 
-    height:100vh; 
-}
+/* === GLOBAL === */
+body {
+    width: 100%;
+    height: 100vh;
+    background-color: #1a1a1a; /* sci-fi dark gray */
+    color: #e0e0e0; /* soft gray text */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* === LINKS === */
+  a {
+    text-decoration: none;
+    color: #66ff66; /* neon green */
+  }
+  
+  a:hover {
+    color: #ffa500; /* orange hover */
+  }
+  
+  /* === SPOT LIST FLEX === */
+  .spot-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding: 3rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #1a1a1a;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  }
 
-.spot-list{
-    display:grid;
-    gap: 1rem; 
-   grid-template-columns: repeat(4, 1fr);
-   grid-template-rows: repeat(2, 1fr);
-    
-    
-}
-.manage-spot-card {
-  max-width: 300px;  /* limits how wide the whole card gets */
-  margin-left: auto;  /* centers horizontally */
-  margin-right: auto; /* centers horizontally */
-  /* keep your other styles */
-  background-color: #2f2f2f;
-  color: white;
-  border-radius: 6px;
-  padding: 12px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-}
+  .spot-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  /* === ROW CONTAINERS === */
+  .spot-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1.5rem;
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  }
 
-.spot-card{
-    max-width:300px; 
-}
-@media (max-width: 760px) {
-    .spot-list{
-    display:grid; 
-    grid-template-columns: 1fr ;
-    gap: 1rem; 
-    width:100%; 
-    
-    
-}
+  .spot-row:nth-child(odd) {
+    background-color: #2a2a2a;
+  }
 
-.spot-card{
-    width:100%; 
-    flex:none; 
-}
+  .spot-row:nth-child(even) {
+    background-color: #333333;
+  }
 
-}
+  /* === ROW ITEMS === */
+  .spot-row-item {
+    flex: 1;
+    min-width: 250px;
+    max-width: 250px;
+    margin: 0 0.5rem;
+  }
+  
+  /* === SPOT CARD === */
+  .spot-card {
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(255, 107, 107, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+  }
+  
+  .spot-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 12px rgba(255, 107, 107, 0.3);
+  }
+  
+  .spot-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  /* === SPOT CARD CONTENT === */
+  .spot-card-content {
+    padding: 1rem;
+    color: #ff6b6b;
+  }
+  
+  .spot-card-title {
+    font-size: 1.25rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #66ff66;
+  }
+  
+  .spot-card-subtitle {
+    font-size: 0.9rem;
+    color: #aaa;
+  }
+  
+  .spot-card-price {
+    font-size: 1rem;
+    color: #ffa500;
+    font-weight: bold;
+    margin-top: 0.5rem;
+  }
+  
+  /* === MANAGE SPOTS CARD === */
+  .manage-spot-card {
+    max-width: 300px;
+    background-color: #2f2f2f;
+    color: white;
+    border-radius: 10px;
+    padding: 16px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 8px rgba(0, 255, 0, 0.1);
+    transition: 0.3s;
+  }
+  
+  .manage-spot-card:hover {
+    box-shadow: 0 0 12px rgba(255, 165, 0, 0.3);
+  }
+  
+  /* === BUTTONS === */
+  button,
+  .create-spot-btn {
+    background-color: #66ff66;
+    color: black;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  button:hover,
+  .create-spot-btn:hover {
+    background-color: #ffa500;
+    color: black;
+  }
+  
+  /* === RESPONSIVE === */
+  @media (max-width: 760px) {
+    .spot-list {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      padding: 1rem;
+    }
+  
+    .spot-card {
+      width: 100%;
+    }
+  
+    .manage-spot-card {
+      width: 100%;
+    }
+  }
+  

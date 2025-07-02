@@ -1,40 +1,69 @@
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+.signup-modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-label {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+.signup-modal-content h2 {
+  color: #ff6b6b;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-input {
-  padding: 0.5rem;
+.signup-modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.signup-modal-content label {
+  color: #ff6b6b;
+  font-weight: 500;
+}
+
+.signup-modal-content input {
+  width: 100%;
+  padding: 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
+  font-size: 16px;
+  color: #333;
 }
 
-input:focus {
+.signup-modal-content input:focus {
   outline: none;
-  border-color: #007bff;
+  border-color: #ff6b6b;
 }
 
-button {
-  padding: 0.5rem 1rem;
-  background-color: #007bff;
+.signup-modal-content button {
+  width: 100%;
+  padding: 12px;
+  background-color: #ff6b6b;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
 }
 
-button:hover {
-  background-color: #0056b3;
+.signup-modal-content button:hover {
+  background-color: #ff5252;
 }
 
-p {
-  color: red;
-  margin: 0.5rem 0;
+.signup-modal-content p {
+  color: #ff6b6b;
+  margin: 10px 0;
+  padding: 8px;
+  background-color: #fff;
+  border: 1px solid #ff6b6b;
+  border-radius: 4px;
+  font-weight: 500;
 }

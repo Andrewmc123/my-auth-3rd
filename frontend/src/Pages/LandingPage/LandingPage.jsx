@@ -1,7 +1,9 @@
 import  { useEffect, useState } from "react";  
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { loadAllSpots } from "../../store/spots";
-import SpotCard from "../../components/SpotCard";
+import SpotCard from "../../components/SpotCard/SpotCard";
+import { FaPlus } from "react-icons/fa"; // Import the plus icon
 
 // I believe this is setting up the main landing page function
 const LandingPage = () => {
@@ -27,19 +29,31 @@ const LandingPage = () => {
   }, [dispatch, setIsLoaded, isLoaded]);
 
   // This is doing the rendering of all the SpotCards on the page
+  const navigate = useNavigate();
+  const currUser = useSelector((state) => state.session.user);
+
   return( 
     <div className="lpg-container">
-      <div className="spot-list">
-        {spots &&
-          // I believe this loops through all the spots and shows each one in a SpotCard
-          spots.map((spot) =>(
-            <SpotCard key={spot.id} spot={spot} />
-          ))
-        }
+      <div className="spot-list-container">
+        {/* First Row */}
+        <div className="spot-row">
+          {spots?.slice(0, 4).map((spot) => (
+            <div className="spot-row-item" key={spot.id}>
+              <SpotCard spot={spot} />
+            </div>
+          ))}
+        </div>
+        {/* Second Row */}
+        <div className="spot-row">
+          {spots?.slice(4, 8).map((spot) => (
+            <div className="spot-row-item" key={spot.id}>
+              <SpotCard spot={spot} />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
-// I believe this sends the LandingPage out so it can be used somewhere else
-export default LandingPage
+export default LandingPage;

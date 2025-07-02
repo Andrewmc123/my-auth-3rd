@@ -1,61 +1,65 @@
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+/* Navigation Bar Styles */
+.nav-bar {
   display: flex;
-  gap: 1rem;
-  background-color: #333;
-  padding: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background-color: #1f1f1f;
+  color: #ff6b6b;
 }
 
-li {
-  display: inline;
+/* Left Side Navigation Styles */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-a {
-  color: white;
+.nav-left a {
+  color: #ff6b6b;
   text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
 }
 
-a:hover {
-  background-color: #555;
+.logo-img {
+  height: 40px;
+  cursor: pointer;
 }
 
-button {
+/* Create Spot Button Styles */
+.create-spot-btn {
+  background-color: #ff6b6b;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out;
+  border: none;
+  cursor: pointer;
+}
+
+.create-spot-btn:hover {
+  background-color: #ff5252;
+}
+
+/* Right Side Navigation Styles */
+.nav-right {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  position: relative;
+}
+
+/* Profile button styles */
+.profile-button {
   background: none;
   border: none;
   color: white;
   cursor: pointer;
-  padding: 0.5rem;
+  font-size: 1.2rem;
+  padding: 8px;
 }
 
-button:hover {
-  background-color: #555;
-}
-
-.profile-dropdown {
-  position: absolute;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 0.5rem;
-  min-width: 200px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
-}
-
-.profile-dropdown.hidden {
-  display: none;
-}
-
-.profile-dropdown li {
-  padding: 0.5rem;
-  display: block;
-  text-align: left;
-}
-
-.profile-dropdown li:hover {
-  background-color: #f5f5f5;
+.profile-button:hover {
+  background-color: #333;
 }

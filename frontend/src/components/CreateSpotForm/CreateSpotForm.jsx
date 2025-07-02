@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import {createSpotThunk } from "../../store/spots"
-import { createSpotImageThunk } from "../../store/images"
+import { createImageThunk } from "../../store/images"
 import "./CreateSpotForm.css"
 
 const CreateSpotForm = ()=> {
@@ -67,30 +67,30 @@ const CreateSpotForm = ()=> {
       if(previewImage !==""){
         dispatch(createSpotThunk(spotData))
       .then((data) =>{
-        dispatch(createSpotImageThunk(data.id, {url: previewImage, preview: true}))
+        dispatch(createImageThunk(data.id, {url: previewImage, preview: true}))
         return data
       })
       .then((data)=>{
         if(imageUrl1){
-        dispatch(createSpotImageThunk(data.id, {url: imageUrl1, preview: false}))
+        dispatch(createImageThunk(data.id, {url: imageUrl1, preview: false}))
         }
           return data
       })
       .then((data)=>{
         if(imageUrl2){
-        dispatch(createSpotImageThunk(data.id, {url: imageUrl2, preview: false}))
+        dispatch(createImageThunk(data.id, {url: imageUrl2, preview: false}))
         }
           return data
       })
       .then((data)=>{
         if(imageUrl3){
-        dispatch(createSpotImageThunk(data.id, {url: imageUrl3, preview: false}))
+        dispatch(createImageThunk(data.id, {url: imageUrl3, preview: false}))
         }
           return data
       })
       .then((data)=>{
         if(imageUrl4){
-        dispatch(createSpotImageThunk(data.id, {url: imageUrl4, preview: false}))
+        dispatch(createImageThunk(data.id, {url: imageUrl4, preview: false}))
         }
           return data
 

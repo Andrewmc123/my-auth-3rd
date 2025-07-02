@@ -1,12 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom'; // This is used to redirect the user after logout
-import { FaUserCircle } from 'react-icons/fa'; // This is the user icon that appears in the button
+import { useNavigate, NavLink } from 'react-router-dom';
+import { FaUserCircle } from 'react-icons/fa';
 import * as sessionActions from '../../store/session';
-import OpenModalMenuItem from './OpenModalMenuItem'; // This creates the menu items
-import LoginFormModal from '../LoginFormModal/LoginFormModal'; // This is the login form
-import SignupFormModal from '../SignupFormModal/SignupFormModal'; // This is the signup form
-import '/src/index.css'
 import './ProfileButton.css'
 
 // This component creates the profile button and dropdown menu
@@ -65,6 +61,13 @@ function ProfileButton({ user }) {
             {/* This shows the user's email */}
             <li onClick={(e) => e.stopPropagation()}>{user.email}</li>
 
+            {/* This is the manage spots link */}
+            <li>
+              <NavLink to="/spots/current" onClick={closeMenu}>
+                Manage Spots
+              </NavLink>
+            </li>
+
             {/* This is the logout button */}
             <li>
               <button onClick={logout}>Log Out</button>
@@ -73,18 +76,44 @@ function ProfileButton({ user }) {
         ) : (
           <>
             {/* This opens the login modal */}
-            <OpenModalMenuItem
-              itemText="Log In"
-              onItemClick={closeMenu}
-              modalComponent={<LoginFormModal />}
-            />
-
-            {/* This opens the signup modal */}
-            <OpenModalMenuItem
-              itemText="Sign Up"
-              onItemClick={closeMenu}
-              modalComponent={<SignupFormModal />}
-            />
+            <li>
+              <button 
+                className="login-btn" 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowMenu(false);
+                  const modal = document.querySelector('.login-modal');
+                  if (modal) {
+                    modal.style.display = 'block';
+                    const content = modal.querySelector('.login-modal-content');
+                    if (content) {
+                      content.style.display = 'block';
+                    }
+                  }
+                }}
+              >
+                Log In
+              </button>
+            </li>
+            <li>
+              <button 
+                className="signup-btn" 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowMenu(false);
+                  const modal = document.querySelector('.signup-modal');
+                  if (modal) {
+                    modal.style.display = 'block';
+                    const content = modal.querySelector('.signup-modal-content');
+                    if (content) {
+                      content.style.display = 'block';
+                    }
+                  }
+                }}
+              >
+                Sign Up
+              </button>
+            </li>
           </>
         )}
       </ul>

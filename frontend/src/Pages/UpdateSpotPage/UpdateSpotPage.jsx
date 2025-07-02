@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { updateSpotThunk, readSpotThunk } from "../../store/spots";
-import { createSpotImageThunk, deleteSpotImageThunk } from "../../store/images";
+import { createImageThunk, deleteImageThunk } from "../../store/images";
 
 // I believe this is the form used to update a spot
 const UpdateSpotForm = () => {
@@ -110,20 +110,20 @@ const UpdateSpotForm = () => {
     if (updatedSpot) {
       const existingPreview = spot.SpotImages.find((img) => img.preview === true);
       if (!existingPreview || existingPreview.url !== previewImage) {
-        await dispatch(createSpotImageThunk(spotId, { url: previewImage, preview: true }));
+        await dispatch(createImageThunk(spotId, { url: previewImage, preview: true }));
       }
 
       // I believe this removes old non-preview images
       const nonPreviewImages = spot.SpotImages.filter((img) => img.preview === false);
       for (const img of nonPreviewImages) {
-        await dispatch(deleteSpotImageThunk(img.id));
+        await dispatch(deleteImageThunk(img.id));
       }
 
       // This is doing the upload for each new image if provided
-      if (imageUrl1) await dispatch(createSpotImageThunk(spotId, { url: imageUrl1, preview: false }));
-      if (imageUrl2) await dispatch(createSpotImageThunk(spotId, { url: imageUrl2, preview: false }));
-      if (imageUrl3) await dispatch(createSpotImageThunk(spotId, { url: imageUrl3, preview: false }));
-      if (imageUrl4) await dispatch(createSpotImageThunk(spotId, { url: imageUrl4, preview: false }));
+      if (imageUrl1) await dispatch(createImageThunk(spotId, { url: imageUrl1, preview: false }));
+      if (imageUrl2) await dispatch(createImageThunk(spotId, { url: imageUrl2, preview: false }));
+      if (imageUrl3) await dispatch(createImageThunk(spotId, { url: imageUrl3, preview: false }));
+      if (imageUrl4) await dispatch(createImageThunk(spotId, { url: imageUrl4, preview: false }));
 
       // This is doing the redirect after updating
       navigate(`/spots/${spotId}`);

@@ -1,5 +1,5 @@
-import DeleteReviewModal from "./DeleteReviewModal"
-import OpenModalButton from "../OpenModalButton"
+import DeleteReviewModal from "./DeleteReviewModal";
+import OpenModalButton from "../OpenModalButton/OpenModalButton";
 import "./ReviewDetails.css";
 
 const ReviewDetails = ({review, currUser, spotId, className}) => {

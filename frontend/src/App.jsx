@@ -9,6 +9,8 @@ import SpotDetailsPage from './Pages/SpotDetailsPage/SpotDetailsPage';
 import ManageSpotsPage from './Pages/ManagaeSpotPage/ManageSpotPage'
 import UpdateSpotForm from './Pages/UpdateSpotPage'
 import ReviewsPage from './Pages/ManageReviewsPage/ManageReviewsPage'
+import LoginFormModal from './components/LoginFormModal/LoginFormModal'
+import SignupFormModal from './components/SignupFormModal/SignupFormModal'
 
 // This Layout component wraps all our pages and handles authentication
 function Layout() {
@@ -26,7 +28,9 @@ function Layout() {
     // Layout component shows the navigation bar and the current page
     <>
       <Navigation isLoaded={isLoaded} />
-     {isLoaded && <Outlet />} {/* Outlet shows the current page content */}
+      {isLoaded && <Outlet />} {/* Outlet shows the current page content */}
+      <LoginFormModal />
+      <SignupFormModal />
 </>
   );
 }
@@ -74,7 +78,7 @@ const router = createBrowserRouter([
   }
 ]);
 
-// The main App component that renders the router
+// The main App componenA that renders the router
 function App() {
   return (
     // This component renders the entire application

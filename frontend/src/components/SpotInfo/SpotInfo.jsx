@@ -40,7 +40,7 @@ const SpotInfo = ({ spotDetails }) => {
       {/* This is showing the main preview image and four smaller ones */}
       <div className="spot-images-container">
         <img 
-          src={largeImage?.url} 
+          src={new URL(largeImage?.url, import.meta.url).href} 
           alt="Front view" 
           className="large-image" 
         />
@@ -48,7 +48,7 @@ const SpotInfo = ({ spotDetails }) => {
           {smallImages.map((image, index) => (
             <img 
               key={image.id}
-              src={image.url}
+              src={new URL(image.url, import.meta.url).href}
               alt={index === 0 ? 'Bedroom' : 
                     index === 1 ? 'Bathroom' : 
                     index === 2 ? 'Kitchen' : 

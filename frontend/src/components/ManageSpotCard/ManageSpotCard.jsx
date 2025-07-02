@@ -1,36 +1,42 @@
-import {useState} from "react";
-import { useNavigate } from 'react-router-dom';
-//import { useModal } from '../../context/Modal';
-import OpenModalButton from '../OpenModalButton'
-import ManageSpotDeleteModal from '../ManageSpotDeleteModal' 
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useModal } from "../../context/Modal";
+import OpenModalButton from "../OpenModalButton/OpenModalButton";
+import ManageSpotDeleteModal from "../ManageSpotDeleteModal";
+import ReviewForm from "../ReviewForm/ReviewForm";
 import { FaStar } from "react-icons/fa";
-import './ManageSpotCard.css'
+import "./ManageSpotCard.css";
 
 const ManageSpotCard = ({spot}) => {
     const navigate = useNavigate();
+    const { setModalContent, setOnModalClose } = useModal();
     const [showTooltip, setShowTooltip] = useState(false);
 
-        const handleClick = () => {
-          navigate(`/spots/${spot.id}`);
-        };
-        const handleUpdateClick = (e) => {
-            e.stopPropagation();
-            navigate(`/spots/${spot.id}/edit`);
-          };
+    const handleClick = () => {
+        navigate(`/spots/${spot.id}`);
+    };
 
-          const handleModalClick = (e) => {
-            e.stopPropagation();
-        };
+    const handleUpdateClick = (e) => {
+        e.stopPropagation();
+        navigate(`/spots/${spot.id}/edit`);
+    };
 
-     
-        return (
-            <div
+    const handleModalClick = (e) => {
+        e.stopPropagation();
+        setModalContent(<ManageSpotDeleteModal spotId={spot.id} />);
+        setOnModalClose(() => {
+            setModalContent(null);
+        });
+    };
+
+    return (
+        <div
             className="manage-spot-card"
             onClick={handleClick}
             onMouseEnter={() => setShowTooltip(true)}
             onMouseLeave={() => setShowTooltip(false)}
             style={{ cursor: 'pointer' }}
-          >
+        >
             <div className="image-wrapper">
               <img
                 src={spot.previewImage}
@@ -59,11 +65,15 @@ const ManageSpotCard = ({spot}) => {
                         Update
                     </button>
                 </div>
+                <div>
+                  <OpenModalButton
+                    buttonText="Review"
+                    modalComponent={<ReviewForm spotId={spot.id} />}
+                  />
+                </div>
                 <div onClick={handleModalClick}>
                     <OpenModalButton
                       buttonText="Delete"
-                    //   onClick={handleModalClick}
-                    //   onButtonClick={closeMenu}
                       modalComponent={<ManageSpotDeleteModal spotId={spot.id} />}
                     />
                 </div>

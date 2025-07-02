@@ -13,7 +13,7 @@ li {
 }
 
 a {
-  color: white;
+  color: orange;
   text-decoration: none;
   padding: 0.5rem 1rem;
   border-radius: 4px;
@@ -26,7 +26,7 @@ a:hover {
 button {
   background: none;
   border: none;
-  color: white;
+  color: orange;
   cursor: pointer;
   padding: 0.5rem;
 }
@@ -35,15 +35,34 @@ button:hover {
   background-color: #555;
 }
 
+/* Profile Button Styles */
+.profile-button {
+  background: none;
+  border: none;
+  color: #ff6b6b;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 8px;
+  transition: color 0.2s ease;
+}
+
+.profile-button:hover {
+  color: #ff5252;
+}
+
+/* Dropdown Menu Styles */
 .profile-dropdown {
   position: absolute;
+  top: 100%;
+  right: 0;
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 4px;
-  padding: 0.5rem;
+  padding: 8px;
   min-width: 200px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   z-index: 1000;
+  color: #ff6b6b;
 }
 
 .profile-dropdown.hidden {
@@ -51,11 +70,61 @@ button:hover {
 }
 
 .profile-dropdown li {
-  padding: 0.5rem;
-  display: block;
-  text-align: left;
+  padding: 8px 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  color: #ff6b6b;
 }
 
 .profile-dropdown li:hover {
   background-color: #f5f5f5;
+}
+
+.profile-dropdown button {
+  width: 100%;
+  text-align: left;
+  padding: 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #ff6b6b;
+}
+
+.profile-dropdown button:hover {
+  background-color: #f5f5f5;
+}
+
+/* Add styles for modals */
+.login-modal, .signup-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.login-modal-content, .signup-modal-content {
+  background-color: white;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+}
+
+.login-modal-content .close, .signup-modal-content .close {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #666;
+}
+
+.login-modal-content .close:hover, .signup-modal-content .close:hover {
+  color: #333;
 }

@@ -1,14 +1,11 @@
-import { useNavigate } from "react-router-dom"; //, useParams 
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ManageSpotCard from "../../components/ManageSpotCard/ManageSpotCard";
+import CreateSpotButton from "../../components/CreateSpotButton/CreateSpotButton";
 import { loadAllSpots } from "../../store/spots";
 
 // I believe this sets up the page for managing the user's spots
 const ManageSpotsPage = () => {
-
-    // This is getting the navigate function so we can move to other pages
-    const navigate = useNavigate()
 
     // I believe this is getting the dispatch function for Redux
     const dispatch = useDispatch();
@@ -36,21 +33,14 @@ const ManageSpotsPage = () => {
         }
     }, [dispatch, setIsLoaded, isLoaded, mySpots])
 
-    // I believe this moves the user to the new spot creation page
-    const handleNavigate = () => {
-        navigate(`/spots/new`);
-    };
-
     // This is doing the rendering of the page with a header, button, and the user's spots
     return (
-        <div>
+        <div className="spot-list">
             <div>
                 <h1>Manage Spots</h1>
 
                 {/* I believe this button lets the user go create a new spot */}
-                <button onClick={handleNavigate}>
-                    Create a New Spot
-                </button>
+                <CreateSpotButton />
             </div>
 
             {/* I believe this section shows all the user's spots in cards */}
