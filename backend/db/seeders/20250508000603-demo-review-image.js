@@ -50,18 +50,14 @@ module.exports = {
         reviewId: 8,
         url: '/spot8img.jpg'
       },
-      {
-        reviewId: 9,
-        url: '/spot8kit.jpg'
-      },
-     
+    
     ], { validate: true });
   },
 
   async down (queryInterface, Sequelize) {
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete('ReviewImage', {
-      reviewId: { [Op.in]: [1, 2, 3, 4, 5, 6, 7, 8, 9] }
+      reviewId: { [Op.in]: [1, 2, 3, 4, 5, 6, 7, 8,] }
     }, {});
   }
 };
