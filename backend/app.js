@@ -36,38 +36,31 @@ app.use(express.json());
 // It adds security headers to protect our server
 // And sets up CSRF protection to prevent malicious requests
 if (!isProduction) {
-    app.use(cors());
-  }
+  app.use(cors());
+}
 
-  app.use(
-    helmet.crossOriginResourcePolicy({
-      policy: "cross-origin"
-    })
-  );
+app.use(
+  helmet.crossOriginResourcePolicy({
+    policy: "cross-origin"
+  })
+);
 
-  app.use(
-    csurf({
-      cookie: {
-        secure: isProduction,
-        sameSite: isProduction && "Lax",
-        httpOnly: true
-      }
-    })
-  );
+app.use(
+  csurf({
+    cookie: {
+      secure: isProduction,
+      sameSite: isProduction && "Lax",
+      httpOnly: true
+    }
+  })
+);
 
-
-
-  // backend/app.js
+// backend/app.js
 const routes = require('./routes');
-
-// ...
-
-
 
 // I believe this code is connecting all our API routes to the server
 // When someone makes a request, it will be handled by the appropriate route
 app.use(routes); // Connect all the routes
-
 
 // I believe this code handles 404 errors when someone tries to access a page that doesn't exist
 // It creates an error message and sends it to the error handling middleware
@@ -79,11 +72,7 @@ app.use((_req, _res, next) => {
   next(err);
 });
 
-// backend/app.js
-
 const { ValidationError } = require('sequelize');
-
-
 
 // Process sequelize errors
 // I believe this code handles database validation errors
@@ -101,7 +90,6 @@ app.use((err, _req, _res, next) => {
   next(err);
 });
 
-
 // I believe this code is the final error handler that sends errors back to the client
 // It shows different error information depending on if we're in production or development
 // In production, it shows less detailed errors for security
@@ -110,16 +98,22 @@ app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
   console.error(err);
 
+  // Convert errors array to object with 'credential' key for frontend compatibility
+  let errors = err.errors;
+  if (Array.isArray(errors)) {
+    errors = { credential: errors[0] || 'An error occurred' };
+  }
+
   if (isProduction) {
     res.json({
       message: err.message,
-      errors: err.errors,
+      errors,
     });
   } else {
     res.json({
       title: err.title || 'Server Error',
       message: err.message,
-      errors: err.errors,
+      errors,
       stack: err.stack,
     });
   }

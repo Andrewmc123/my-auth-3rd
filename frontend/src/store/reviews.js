@@ -49,14 +49,16 @@ export const readReviewsThunk = (spotId) => async (dispatch) => {
 
 export const deleteReviewsThunk = (reviewId) => async (dispatch) => {
     const response = await csrfFetch(`/api/reviews/${reviewId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-    })
+        method: "DELETE"
+    });
 
     if(response.ok){
-        dispatch(deleteReviews(reviewId))
+        dispatch(deleteReviews(reviewId));
+        return response;
+    } else {
+        const data = await response.json();
+        if (data.errors) throw data.errors;
+        return data;
     }
 }
 

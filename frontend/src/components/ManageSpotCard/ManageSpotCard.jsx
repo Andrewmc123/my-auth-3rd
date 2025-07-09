@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import OpenModalButton from "../OpenModalButton/OpenModalButton";
-import ManageSpotDeleteModal from "../ManageSpotDeleteModal";
+import DeleteSpotModal from "../ManageSpots/DeleteSpotModal";
 import ReviewForm from "../ReviewForm/ReviewForm";
 import { FaStar } from "react-icons/fa";
 import "./ManageSpotCard.css";
@@ -23,7 +23,7 @@ const ManageSpotCard = ({spot}) => {
 
     const handleModalClick = (e) => {
         e.stopPropagation();
-        setModalContent(<ManageSpotDeleteModal spotId={spot.id} />);
+        setModalContent(<DeleteSpotModal spotId={spot.id} />);
         setOnModalClose(() => {
             setModalContent(null);
         });
@@ -74,7 +74,7 @@ const ManageSpotCard = ({spot}) => {
                 <div onClick={handleModalClick}>
                     <OpenModalButton
                       buttonText="Delete"
-                      modalComponent={<ManageSpotDeleteModal spotId={spot.id} />}
+                      modalComponent={<DeleteSpotModal spotId={spot.id} />}
                     />
                 </div>
             </div>

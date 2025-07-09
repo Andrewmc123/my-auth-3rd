@@ -1,4 +1,3 @@
-//import React from "react" 
 import { FaStar } from "react-icons/fa";
 import "./SpotInfo.css";
 
@@ -16,28 +15,17 @@ const SpotInfo = ({ spotDetails }) => {
     state
   } = spotDetails;
 
-  // I believe this finds the main preview image to show large
   const largeImage = SpotImages.find(img => img.preview);
-
-  // This is doing a filter to grab the other four images for thumbnails
   const smallImages = SpotImages.filter(img => !img.preview).slice(0, 4);
+  const handleClick = () => alert('Feature Coming Soon...');
 
-  // I believe this triggers the 'Feature Coming Soon' alert on reserve
-  const handleClick = () => {
-    alert('Feature Coming Soon...');
-  };
+  const hasReviews = numReviews && numReviews > 0;
 
   return (
     <div className="spot-details-container">
-      {/* This is showing the spot's title */}
       <h2 className="spot-title">{name}</h2>
+      <p className="spot-location">{city}, {state}, {country}</p>
 
-      {/* This is showing the full location */}
-      <p className="spot-location">
-        {city}, {state}, {country}
-      </p>
-
-      {/* This is showing the main preview image and four smaller ones */}
       <div className="spot-images-container">
         <img 
           src={new URL(largeImage?.url, import.meta.url).href} 
@@ -49,37 +37,39 @@ const SpotInfo = ({ spotDetails }) => {
             <img 
               key={image.id}
               src={new URL(image.url, import.meta.url).href}
-              alt={index === 0 ? 'Bedroom' : 
-                    index === 1 ? 'Bathroom' : 
-                    index === 2 ? 'Kitchen' : 
-                    index === 3 ? 'Backyard' : ''}
+              alt={
+                index === 0 ? "Bedroom" :
+                index === 1 ? "Bathroom" :
+                index === 2 ? "Kitchen" :
+                index === 3 ? "Backyard" : ""
+              }
               className="small-image"
             />
           ))}
         </div>
       </div>
 
-      {/* This is doing the layout for description and callout box */}
       <div className="spot-details-content">
         <div className="spot-details-left">
-          {/* This is showing who the host is */}
           <h2 className="spot-host">
             Hosted by {Owner.firstName} {Owner.lastName}
           </h2>
-
-          {/* This is showing the description of the spot */}
           <p className="spot-description">{description}</p>
         </div>
 
-        {/* This is the callout box with price and rating */}
         <div className="callout-container">
           <div className="callout-text">
             <span className="callout-price">${price} night</span>
             <p className="callout-rating">
-              <FaStar />
-              {avgStarRating ? avgStarRating.toFixed(1) : "New"}
-              {/* This is doing the dot and review count formatting */}
-              {numReviews > 0 ? ` · ${numReviews} ${numReviews === 1 ? "Review" : "Reviews"}` : ""}
+              {hasReviews ? (
+                <>
+                  {avgStarRating?.toFixed(1)} · {numReviews} {numReviews === 1 ? "Review" : "Reviews"}
+                </>
+              ) : (
+                <>
+                  <FaStar /> New
+                </>
+              )}
             </p>
           </div>
           <div className="button-container">

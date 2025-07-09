@@ -1,8 +1,11 @@
 import DeleteReviewModal from "./DeleteReviewModal";
 import OpenModalButton from "../OpenModalButton/OpenModalButton";
 import "./ReviewDetails.css";
+import { useDispatch } from 'react-redux';
+import * as reviewActions from '../../store/reviews';
 
 const ReviewDetails = ({review, currUser, spotId, className}) => {
+    const dispatch = useDispatch();
 
     const timestamp = review.createdAt
     const date = new Date(timestamp)
@@ -18,12 +21,21 @@ const ReviewDetails = ({review, currUser, spotId, className}) => {
                     <p className="review">{review.review}</p>
                     {currUser?.id === review.userId ? (
                         <span>
-                        <OpenModalButton
-                            buttonClassName="delete-review-modal-button"
-                            reviewId={review.id}
-                            buttonText="Delete"
-                            modalComponent={<DeleteReviewModal reviewId={review.id} spotId={spotId}/>}
-                        />{" "}
+                         <OpenModalButton
+                             buttonClassName="delete-review-modal-button"
+                             buttonText="Delete"
+                             modalComponent={DeleteReviewModal}
+                             onButtonClick={() => {
+                                 dispatch(reviewActions.readReviewsThunk(spotId));
+                             }}
+                             modalProps={{
+                                 reviewId: review.id,
+                                 spotId: spotId,
+                                 onReviewDeleted: () => {
+                                     dispatch(reviewActions.readReviewsThunk(spotId));
+                                 }
+                             }}
+                         />{" "}
                         </span>
                     ) : (
                         <></>

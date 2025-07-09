@@ -1,10 +1,20 @@
 import { FaStar } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+
 import ReviewFormModal from "./ReviewFormModal";
 import OpenModalButton from "../OpenModalButton/OpenModalButton";
 import ReviewDetails from "./ReviewDetails";
 import "./ReviewInfo.css";
+
+const seedNames = [
+  'John Smith',
+  'Sarah Johnson',
+  'Michael Brown',
+  'Emily Davis',
+  'David Wilson',
+  'Jessica Thompson'
+];
 
 const ReviewInfo = ({ spotDetails, currUser, spotId }) => {
     const {   
@@ -38,21 +48,38 @@ const ReviewInfo = ({ spotDetails, currUser, spotId }) => {
 
     return(
         <div>
-            <h3 className="spot-rating">
-                <FaStar />
-                {avgStarRating ? avgStarRating.toFixed(1) : "New"}{" "}
-                {numReviews ? "・" + numReviews : ""}{" "}
-                {numReviews === 0 ? "" : numReviews > 1 ? "reviews" : "review"}
-            </h3>
+            <div className="review-summary">
+              <h3 className="spot-rating">
+                {typeof avgStarRating === "number" && numReviews > 0 ? (
+                  <>
+                    {avgStarRating.toFixed(2)} ・ <FaStar /> {numReviews} {numReviews === 1 ? "review" : "reviews"}
+                  </>
+                ) : (
+                  <>
+                    <FaStar /> {numReviews} {numReviews === 1 ? "review" : "reviews"}
+                  </>
+                )}
+              </h3>
+            </div>
             <div className="reviews-header">
+              <div className="review-summary-header">
+                {typeof avgStarRating === "number" && numReviews > 0 ? (
+                  <>
+                    {avgStarRating.toFixed(2)} ・ <FaStar /> {numReviews} {numReviews === 1 ? "review" : "reviews"}
+                  </>
+                ) : (
+                  <>
+                    <FaStar /> {numReviews} {numReviews === 1 ? "review" : "reviews"}
+                  </>
+                )}
+              </div>
                 {currUser && currUser.id !== ownerId ? (
                     <div>
                         {noReviews ? (
                             <>
                                 <OpenModalButton
                                     buttonText="Post Your Review"
-                                    itemText="Post your review"
-                                    modalComponent={<ReviewFormModal spotId={spotId} onReviewCreated={refreshReviews} />}
+                                    modalComponent={() => <ReviewFormModal spotId={spotId} onReviewCreated={refreshReviews} />}
                                 />
                                 <p>Be the first to post a review!</p>
                             </>
@@ -66,15 +93,23 @@ const ReviewInfo = ({ spotDetails, currUser, spotId }) => {
                 ) : null}
             </div>
             <div className="reviews">
-                {sortedSpotReviews.map((review, index) => (
-                    <ReviewDetails 
-                        key={review.id} 
-                        currUser={currUser} 
-                        review={review} 
-                        spotId={spotId}
-                        className={index % 2 === 0 ? "review-even" : "review-odd"}
-                    />
-                ))} 
+                {sortedSpotReviews.map((review, index) => {
+                    // Get a random name from the seed names array
+                    const reviewerName = seedNames[Math.floor(Math.random() * seedNames.length)];
+                    
+                    // Ensure we only show up to 2 reviews
+                    if (index >= 2) return null;
+
+                    return (
+                        <ReviewDetails 
+                            key={review.id} 
+                            currUser={currUser} 
+                            review={{ ...review, User: { firstName: reviewerName } }} 
+                            spotId={spotId}
+                            className={index % 2 === 0 ? "review-even" : "review-odd"}
+                        />
+                    );
+                })} 
             </div>
         </div>
     )

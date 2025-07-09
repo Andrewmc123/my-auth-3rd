@@ -6,7 +6,7 @@ import * as sessionActions from '../../store/session';
 import './ProfileButton.css'
 
 // This component creates the profile button and dropdown menu
-function ProfileButton({ user }) {
+function ProfileButton({ user, setShowLogin, setShowSignup }) {
   const dispatch = useDispatch();
   const navigate = useNavigate(); // This allows us to navigate to the home page
   const [showMenu, setShowMenu] = useState(false); // Controls whether the menu is visible
@@ -82,14 +82,7 @@ function ProfileButton({ user }) {
                 onClick={(e) => {
                   e.stopPropagation();
                   setShowMenu(false);
-                  const modal = document.querySelector('.login-modal');
-                  if (modal) {
-                    modal.style.display = 'block';
-                    const content = modal.querySelector('.login-modal-content');
-                    if (content) {
-                      content.style.display = 'block';
-                    }
-                  }
+                  setShowLogin(true);
                 }}
               >
                 Log In
@@ -101,14 +94,7 @@ function ProfileButton({ user }) {
                 onClick={(e) => {
                   e.stopPropagation();
                   setShowMenu(false);
-                  const modal = document.querySelector('.signup-modal');
-                  if (modal) {
-                    modal.style.display = 'block';
-                    const content = modal.querySelector('.signup-modal-content');
-                    if (content) {
-                      content.style.display = 'block';
-                    }
-                  }
+                  setShowSignup(true);
                 }}
               >
                 Sign Up

@@ -1,47 +1,36 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
-//import './DeleteReviewModal.css'
-import * as reviewActions from '../../store/reviews';
-import * as spotActions from '../../store/spots';
+import { deleteReviewsThunk } from '../../store/reviews';
+import './DeleteReviewModal.css';
 
+function DeleteReviewModal({ reviewId, onReviewDeleted }) {
+  const dispatch = useDispatch();
+  const { closeModal } = useModal();
 
-const DeleteReviewModal = ({ reviewId, spotId}) => {
-    const dispatch = useDispatch()
-    const { closeModal } = useModal();
-    const currSpotId = useSelector((state) => state.spots.id)
+  const handleDelete = async () => {
+    try {
+      await dispatch(deleteReviewsThunk(reviewId));
+      if (typeof onReviewDeleted === 'function') onReviewDeleted();
+      closeModal();
+    } catch (error) {
+      console.error('Error deleting review:', error);
+    }
+  };
 
-    //console.log("ID", currSpotId)
-
-
-    const handleClickDelete = async (e) => {
-        e.preventDefault();
-
-        await dispatch(reviewActions.deleteReviewsThunk(reviewId, currSpotId))
-        await dispatch(spotActions.readSpotThunk(spotId)).then(closeModal())
-      };
-
-
-    return(
-        <div className="review-modal-container">
-            <h1 >Confirm Delete</h1>
-            <div>Are you sure you want to delete this review?</div>
-            <br />
-            <br />
-            <button
-                onClick={handleClickDelete}
-                className="delete-review-button butt-wide"
-                style={{ backgroundColor: '#E62539' }}
-                >
-                Yes (Delete Review)
-            </button>
-            <button
-                onClick={closeModal}
-                className="keep-review-button butt-wide"
-                style={{ backgroundColor: '#333333' }}
-                >
-                No (Keep Review)
-            </button>
-        </div>
-    )
+  return (
+    <div className="delete-modal">
+      <h2>Confirm Delete</h2>
+      <p>Are you sure you want to delete this review?</p>
+      <div className="delete-modal-buttons">
+        <button className="delete-button" onClick={handleDelete}>
+          Yes (Delete Review)
+        </button>
+        <button className="cancel-button" onClick={closeModal}>
+          No (Keep Review)
+        </button>
+      </div>
+    </div>
+  );
 }
-export default DeleteReviewModal
+
+export default DeleteReviewModal;

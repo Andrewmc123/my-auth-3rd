@@ -12,6 +12,7 @@ import ReviewsPage from './Pages/ManageReviewsPage/ManageReviewsPage'
 import LoginFormModal from './components/LoginFormModal/LoginFormModal'
 import SignupFormModal from './components/SignupFormModal/SignupFormModal'
 
+
 // This Layout component wraps all our pages and handles authentication
 function Layout() {
   const dispatch = useDispatch();

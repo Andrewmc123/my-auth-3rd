@@ -296,58 +296,46 @@ router.get('/:spotId', async (req, res) => {
                 attributes: ['stars']
             },
         ]
-    })
-    if(!spot){
-        return res.status(404).json({message: "Spot couldn't be found"})
-    }
-
-    const spotDetails = spot.toJSON()
-
-    let totalStars = 0;
-    let reviewCount = 0;
-
-    spotDetails.Reviews.forEach((review) => {
-        totalStars += review.stars;
-        reviewCount++;
-    })
-
-    spotDetails.avgRating = reviewCount > 0 ? parseFloat((totalStars / reviewCount).toFixed(1)) : null;
-    spotDetails.numReviews = reviewCount;
-
-    spotDetails.ownerId = spotDetails.Owner.id;
-
-    const formattedSpotImages = spotDetails.SpotImages.map(image => {
-        return {
-            id: image.id,
-            url: image.url,
-            preview: image.preview
-        };
     });
 
+    if (!spot) {
+        return res.status(404).json({message: "Spot couldn't be found"});
+    }
+
+    const spotData = spot.toJSON();
+
+    // Calculate average rating
+    const stars = spotData.Reviews.map(review => review.stars);
+    const avgRating = stars.length > 0 ? (stars.reduce((a, b) => a + b, 0) / stars.length).toFixed(1) : null;
+    spotData.avgRating = avgRating ? parseFloat(avgRating) : null;
+    spotData.numReviews = stars.length;
+
+    // Format the response
     const formattedResponse = {
-        id: spotDetails.id,
-        ownerId: spotDetails.ownerId,
-        address: spotDetails.address,
-        city: spotDetails.city,
-        state: spotDetails.state,
-        country: spotDetails.country,
-        lat: spotDetails.lat,
-        lng: spotDetails.lng,
-        name: spotDetails.name,
-        description: spotDetails.description,
-        price: spotDetails.price,
-        createdAt: spotDetails.createdAt,
-        updatedAt: spotDetails.updatedAt,
-        numReviews: spotDetails.numReviews,
-        avgStarRating: spotDetails.avgStarRating,
-        SpotImages: formattedSpotImages,
+        id: spotData.id,
+        ownerId: spotData.Owner.id,
+        address: spotData.address,
+        city: spotData.city,
+        state: spotData.state,
+        country: spotData.country,
+        lat: spotData.lat,
+        lng: spotData.lng,
+        name: spotData.name,
+        description: spotData.description,
+        price: spotData.price,
+        createdAt: spotData.createdAt,
+        updatedAt: spotData.updatedAt,
+        avgRating: spotData.avgRating,
+        numReviews: spotData.numReviews,
+        SpotImages: spotData.SpotImages,
         Owner: {
-            id: spotDetails.Owner.id,
-            firstName: spotDetails.Owner.firstName,
-            lastName: spotDetails.Owner.lastName
+            id: spotData.Owner.id,
+            firstName: spotData.Owner.firstName,
+            lastName: spotData.Owner.lastName
         }
     };
-    res.status(200).json(formattedResponse);
+
+    res.json(formattedResponse);
 })
 
 

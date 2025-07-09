@@ -1,13 +1,14 @@
+// frontend/src/components/SignupFormModal/SignupFormModal.jsx
+
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import './SignupForm.css';
 
-// I believe this component renders the sign-up form modal
-function SignupFormModal() {
+function SignupFormModal({ show, onClose }) {
   const dispatch = useDispatch();
 
-  // I believe these states store the input values for each form field
+  // I believe these hold all form input states
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -15,56 +16,41 @@ function SignupFormModal() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  // I believe this stores errors returned from the server or validation
+  // I believe this holds form validation or server errors
   const [errors, setErrors] = useState({});
 
-  const handleClose = () => {
-    const modal = document.querySelector('.signup-modal');
-    if (modal) {
-      modal.style.display = 'none';
+  // This is doing reset when modal opens
+  useEffect(() => {
+    if (show) {
+      setEmail("");
+      setUsername("");
+      setFirstName("");
+      setLastName("");
+      setPassword("");
+      setConfirmPassword("");
+      setErrors({});
     }
+  }, [show]);
+
+  // This is doing the modal close
+  const handleClose = () => {
+    onClose();
   };
 
-  useEffect(() => {
-    const modal = document.querySelector('.signup-modal');
-    if (modal) {
-      modal.style.display = 'block';
-    }
-  }, []);
-
-  useEffect(() => {
-    // Close the modal when the component unmounts
-    return () => {
-      const modal = document.querySelector('.signup-modal');
-      if (modal) {
-        modal.style.display = 'none';
-      }
-    };
-  }, []);
-
-  // I believe this handles form submission with validation and dispatches signup thunk
+  // This is doing the signup form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // I believe this validates if password and confirm password match
     if (password === confirmPassword) {
-      setErrors({}); // I believe this clears previous errors before dispatch
-
-      // I believe this dispatches the signup thunk action with all form data
-      return dispatch(
-        sessionActions.signup({
-          email,
-          username,
-          firstName,
-          lastName,
-          password
-        })
-      )
-        // I believe this closes the modal on successful signup
-        .then(() => {
-          handleClose();
-        })
-        // I believe this catches server errors and sets errors state
+      setErrors({});
+      return dispatch(sessionActions.signup({
+        email,
+        username,
+        firstName,
+        lastName,
+        password
+      }))
+        .then(() => handleClose())
         .catch(async (res) => {
           const data = await res.json();
           if (data?.errors) {
@@ -73,13 +59,13 @@ function SignupFormModal() {
         });
     }
 
-    // I believe this sets an error if confirm password doesn't match password
+    // I believe this handles password mismatch
     return setErrors({
       confirmPassword: "Confirm Password field must be the same as the Password field"
     });
   };
 
-  // I believe this disables the submit button if required validations fail
+  // I believe this disables sign up button if any field is invalid
   const isDisabled =
     !email ||
     !username ||
@@ -91,14 +77,17 @@ function SignupFormModal() {
     !confirmPassword ||
     confirmPassword.length < 6;
 
+  if (!show) return null;
+
   return (
-    <div className="signup-modal">
+    <div className="signup-modal show">
       <div className="signup-modal-content">
-        <span className="close" onClick={handleClose}>&times;</span>
+        <button className="close-modal" onClick={handleClose}>
+          &times;
+        </button>
         <h2>Sign Up</h2>
         <form onSubmit={handleSubmit} className="signup-form">
 
-          {/* I believe this is the email input field */}
           <label>
             Email
             <input
@@ -110,7 +99,6 @@ function SignupFormModal() {
           </label>
           {errors.email && <p className="error">{errors.email}</p>}
 
-          {/* I believe this is the username input field */}
           <label>
             Username
             <input
@@ -122,7 +110,6 @@ function SignupFormModal() {
           </label>
           {errors.username && <p className="error">{errors.username}</p>}
 
-          {/* I believe this is the first name input field */}
           <label>
             First Name
             <input
@@ -134,7 +121,6 @@ function SignupFormModal() {
           </label>
           {errors.firstName && <p className="error">{errors.firstName}</p>}
 
-          {/* I believe this is the last name input field */}
           <label>
             Last Name
             <input
@@ -146,7 +132,6 @@ function SignupFormModal() {
           </label>
           {errors.lastName && <p className="error">{errors.lastName}</p>}
 
-          {/* I believe this is the password input field */}
           <label>
             Password
             <input
@@ -158,7 +143,6 @@ function SignupFormModal() {
           </label>
           {errors.password && <p className="error">{errors.password}</p>}
 
-          {/* I believe this is the confirm password input field */}
           <label>
             Confirm Password
             <input
@@ -172,7 +156,6 @@ function SignupFormModal() {
             <p className="error">{errors.confirmPassword}</p>
           )}
 
-          {/* I believe this is the submit button, disabled if inputs are invalid */}
           <button type="submit" disabled={isDisabled}>Sign Up</button>
         </form>
       </div>

@@ -1,67 +1,58 @@
 // frontend/src/components/LoginFormModal/LoginFormModal.jsx
 
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import './LoginForm.css';
 
-function LoginFormModal() {
+function LoginFormModal({ show, onClose }) {
   const dispatch = useDispatch();
-  const sessionUser = useSelector((state) => state.session.user);
+
+
+  // I believe these hold input and error state for the form
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  const handleClose = () => {
-    const modal = document.querySelector('.login-modal');
-    if (modal) {
-      modal.style.display = 'none';
+  // This is doing a reset of inputs/errors when modal opens
+  useEffect(() => {
+    if (show) {
+      setCredential("");
+      setPassword("");
+      setErrors({});
     }
+  }, [show]);
+
+  // This is doing the close behavior
+  const handleClose = () => {
+    onClose();
   };
 
-  useEffect(() => {
-    const modal = document.querySelector('.login-modal');
-    if (modal) {
-      modal.style.display = 'block';
-    }
-
-    return () => {
-      if (modal) {
-        modal.style.display = 'none';
-      }
-    };
-  }, []);
-
-  const isDisabled = credential.length < 4 || password.length < 6;
-
-  useEffect(() => {
-    setCredential("");
-    setPassword("");
-    setErrors({});
-  }, []);
-
-  if (sessionUser) return null;
-
+  // This is doing form submission to login a user
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
+
     return dispatch(sessionActions.login({ credential, password }))
-      .then(() => {
-        handleClose();
-      })
+      .then(() => handleClose())
       .catch(async (res) => {
         const data = await res.json();
-        if (data?.errors) {
+        if (data && data.errors) {
           setErrors(data.errors);
+        } else {
+          setErrors({ credential: "The provided credentials were invalid" });
         }
       });
   };
 
+  // This is doing login as demo user
   const handleDemoLogin = (e) => {
     e.preventDefault();
-    return dispatch(sessionActions.login({ credential: 'Demo', password: 'password' }))
+    return dispatch(sessionActions.loginDemo())
       .then(() => {
         handleClose();
+        // Navigate to home page after successful login
+        window.location.href = '/';
       })
       .catch(async (res) => {
         const data = await res.json();
@@ -71,34 +62,51 @@ function LoginFormModal() {
       });
   };
 
+  // I believe this disables the login button if inputs are invalid
+  const isDisabled = credential.length < 4 || password.length < 6;
+
+  // This is doing conditional rendering of the modal
+  if (!show) return null;
+
   return (
-    <div className="login-modal">
+    <div className="login-modal show">
       <div className="login-modal-content">
-        <span className="close" onClick={handleClose}>&times;</span>
+        <button className="close-modal" onClick={handleClose}>&times;</button>
         <h2>Log In</h2>
-        <form onSubmit={handleSubmit} className="login-form">
+
+        <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="credential">Username or Email</label>
             <input
               type="text"
-              id="credential"
+              placeholder="Username or Email"
               value={credential}
               onChange={(e) => setCredential(e.target.value)}
               required
+              className={credential.length > 0 && credential.length < 4 ? 'invalid-input' : ''}
             />
+            {credential.length > 0 && credential.length < 4 && (
+              <p className="input-warning">Username must be at least 4 characters</p>
+            )}
           </div>
+
           <div className="form-group">
-            <label htmlFor="password">Password</label>
             <input
               type="password"
-              id="password"
+              placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              className={password.length > 0 && password.length < 6 ? 'invalid-input' : ''}
             />
+            {password.length > 0 && password.length < 6 && (
+              <p className="input-warning">Password must be at least 6 characters</p>
+            )}
           </div>
-          {errors.credential && <p>{errors.credential}</p>}
-          <div>
+
+          {errors.credential && <p className="error">{errors.credential}</p>}
+          {errors.password && <p className="error">{errors.password}</p>}
+
+          <div className="button-group">
             <button type="submit" disabled={isDisabled}>Log In</button>
             <button type="button" onClick={handleDemoLogin}>Log in as Demo User</button>
           </div>

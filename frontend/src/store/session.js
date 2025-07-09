@@ -32,6 +32,21 @@ export const login = (user) => async (dispatch) => {
   return response;
 };
 
+// This is doing demo login using the special demo endpoint
+export const loginDemo = () => async (dispatch) => {
+  try {
+    const response = await csrfFetch("/api/session/demo", {
+      method: "POST"
+    });
+    const data = await response.json();
+    dispatch(setUser(data.user));
+    return data;
+  } catch (error) {
+    console.error('Demo login error:', error);
+    throw error;
+  }
+};
+
 
 // ... restore the session user 
 export const restoreUser = () => async (dispatch) => {
