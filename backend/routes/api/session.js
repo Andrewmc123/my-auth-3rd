@@ -28,9 +28,9 @@ router.get('/', restoreUser, (req, res) => {
 
 // Demo user credentials
 const DEMO_USER = {
-    email: 'demo@user.io',
-    username: 'Demo-lition',
-    password: 'password'
+    email: 'explorer@user.io',
+    username: 'WanderQueen',
+    password: 'explore123'
 };
 
 // Demo user login
@@ -70,12 +70,12 @@ router.post('/demo', async (req, res, next) => {
 
 const validateLogin = [
     check('credential')
-      .exists({ checkFalsy: true })
-      .notEmpty()
-      .withMessage('Please provide a valid email or username.'),
+    .exists({ checkFalsy: true })
+    .notEmpty()
+    .withMessage('Please provide a valid email or username.'),
     check('password')
-      .exists({ checkFalsy: true })
-      .withMessage('Please provide a password.'),
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a password.'),
     handleValidationErrors
 ];
 
